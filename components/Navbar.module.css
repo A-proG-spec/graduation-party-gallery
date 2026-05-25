@@ -1,14 +1,12 @@
 .navbar {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(15px);
-  border-radius: 45px;
-  margin: 10px 100px 0px 100px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #00ffff;
   padding: 1rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
 }
 
 .navContainer {
@@ -24,150 +22,147 @@
 
 .logo {
   font-size: 1.5rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #fff, #e0d4ff);
+  font-weight: 800;
+  background: linear-gradient(135deg, #00ffff, #ff3366);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   letter-spacing: -0.5px;
+  text-transform: uppercase;
 }
 
 .navButtons {
   display: flex;
   gap: 15px;
   align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 .uploadBtn {
-  backdrop-filter: blur(10px);
-  color: black;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 10px 20px;
-  border-radius: 50px;
-  font-size: 0.95rem;
-  font-weight: 500;
+  background: linear-gradient(135deg, #00ffff, #00ccff);
+  color: #000;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 0px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   transition: all 0.3s ease;
-  cursor: pointer;
-  background: rgba(255, 255, 255, 0.9);
 }
 
 .uploadBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+  background: linear-gradient(135deg, #00ffff, #00ffff);
 }
 
 .adminBtn {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  color: white;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
   padding: 10px 20px;
-  border-radius: 50px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  border-radius: 0px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .adminBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #00ffff;
+  color: #00ffff;
 }
 
 .adminControls {
   display: flex;
   gap: 12px;
   align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 .adminBadge {
-  background: rgba(231, 76, 60, 0.9);
-  backdrop-filter: blur(10px);
+  background: #ff3366;
+  color: #fff;
   padding: 6px 14px;
-  border-radius: 50px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .logoutBtn {
-  background: rgba(149, 165, 166, 0.9);
-  backdrop-filter: blur(10px);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: #fff;
+  border: 1px solid #ff3366;
   padding: 8px 18px;
-  border-radius: 50px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  border-radius: 0px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .logoutBtn:hover {
-  background: rgba(149, 165, 166, 1);
-  transform: translateY(-1px);
+  background: rgba(255, 51, 102, 0.2);
+  border-color: #ff3366;
+  color: #ff3366;
 }
 
-/* Modal Styles */
+/* Modal Styles - Cyberpunk */
 .modalOverlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  padding: 20px;
 }
 
 .modal {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(20px);
-  padding: 35px;
-  border-radius: 24px;
+  background: #0a0a0a;
+  padding: 40px;
+  border-radius: 0px;
   width: 90%;
   max-width: 420px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
 }
 
 .modal h2 {
   margin-bottom: 25px;
   text-align: center;
-  color: white;
-  font-weight: 600;
-  font-size: 1.8rem;
+  color: #00ffff;
+  font-weight: 800;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .input {
   width: 100%;
   padding: 12px 15px;
   margin-bottom: 18px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 0px;
   font-size: 1rem;
-  color: white;
+  color: #fff;
   font-family: 'Outfit', sans-serif;
-  transition: all 0.3s ease;
-  box-sizing: border-box;
 }
 
 .input:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.15);
+  border-color: #00ffff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
 }
 
 .input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: #666;
 }
 
 .modalButtons {
@@ -175,242 +170,57 @@
   gap: 12px;
   justify-content: center;
   margin-top: 10px;
-  flex-wrap: wrap;
 }
 
 .loginSubmitBtn {
-  background: linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(41, 128, 185, 0.9));
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #00ffff, #00ccff);
+  color: #000;
+  border: none;
   padding: 12px 24px;
-  border-radius: 50px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  border-radius: 0px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .loginSubmitBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+  background: #00ffff;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
 }
 
 .cancelBtn {
-  background: rgba(149, 165, 166, 0.8);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: #fff;
+  border: 1px solid #ff3366;
   padding: 12px 24px;
-  border-radius: 50px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  border-radius: 0px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .cancelBtn:hover {
-  background: rgba(149, 165, 166, 1);
-  transform: translateY(-1px);
+  background: rgba(255, 51, 102, 0.2);
+  border-color: #ff3366;
 }
 
-/* ========== RESPONSIVE STYLES ========== */
-
-/* Large Tablets and small desktops */
-@media (max-width: 1024px) {
-  .navbar {
-    margin: 10px 50px 0px 50px;
-  }
-  
-  .navContainer {
-    padding: 0 25px;
-  }
-}
-
-/* Tablets */
 @media (max-width: 768px) {
-  .navbar {
-    margin: 10px 20px 0px 20px;
-    border-radius: 35px;
-    padding: 0.8rem 0;
-  }
-  
   .navContainer {
     flex-direction: column;
     text-align: center;
     padding: 0 20px;
-    gap: 12px;
-  }
-  
-  .logo {
-    font-size: 1.3rem;
-  }
-  
-  .navButtons {
-    width: 100%;
-    justify-content: center;
-    gap: 12px;
-  }
-  
-  .uploadBtn, 
-  .adminBtn {
-    padding: 8px 18px;
-    font-size: 0.9rem;
-  }
-  
-  .adminControls {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .modal {
-    padding: 25px;
-    width: 95%;
-    max-width: 380px;
-  }
-  
-  .modal h2 {
-    font-size: 1.5rem;
-  }
-  
-  .input {
-    padding: 10px 12px;
-    font-size: 0.95rem;
-  }
-  
-  .loginSubmitBtn,
-  .cancelBtn {
-    padding: 10px 20px;
-    font-size: 0.95rem;
-  }
-}
-
-/* Mobile Landscape */
-@media (max-width: 600px) {
-  .navbar {
-    margin: 10px 15px 0px 15px;
-    border-radius: 30px;
-    padding: 0.7rem 0;
-  }
-  
-  .navContainer {
-    padding: 0 15px;
-    gap: 10px;
-  }
-  
-  .logo {
-    font-size: 1.2rem;
-  }
-  
-  .navButtons {
-    gap: 10px;
-  }
-  
-  .uploadBtn,
-  .adminBtn {
-    padding: 7px 16px;
-    font-size: 0.85rem;
-  }
-  
-  .adminBadge {
-    padding: 5px 12px;
-    font-size: 0.8rem;
-  }
-  
-  .logoutBtn {
-    padding: 7px 15px;
-    font-size: 0.85rem;
-  }
-  
-  .modal {
-    padding: 20px;
-  }
-  
-  .modal h2 {
-    font-size: 1.3rem;
-    margin-bottom: 20px;
-  }
-  
-  .modalButtons {
-    gap: 10px;
-  }
-  
-  .loginSubmitBtn,
-  .cancelBtn {
-    padding: 8px 18px;
-    font-size: 0.9rem;
-  }
-}
-
-/* Mobile Portrait */
-@media (max-width: 480px) {
-  .navbar {
-    margin: 5px 10px 0px 10px;
-    border-radius: 25px;
-  }
-  
-  .uploadBtn,
-  .adminBtn {
-    padding: 6px 14px;
-    font-size: 0.8rem;
-  }
-  
-  .adminControls {
-    gap: 8px;
-  }
-  
-  .adminBadge {
-    padding: 4px 10px;
-    font-size: 0.75rem;
-  }
-  
-  .logoutBtn {
-    padding: 6px 12px;
-    font-size: 0.8rem;
-  }
-  
-  .modal {
-    padding: 18px;
-  }
-  
-  .modal h2 {
-    font-size: 1.2rem;
-    margin-bottom: 18px;
-  }
-  
-  .input {
-    padding: 8px 10px;
-    margin-bottom: 15px;
-    font-size: 0.9rem;
-  }
-  
-  .modalButtons {
-    flex-direction: column;
-  }
-  
-  .loginSubmitBtn,
-  .cancelBtn {
-    width: 100%;
-    text-align: center;
-  }
-}
-
-/* Small mobile devices */
-@media (max-width: 380px) {
-  .navbar {
-    margin: 5px 8px 0px 8px;
-    border-radius: 20px;
   }
   
   .logo {
     font-size: 1.1rem;
   }
   
-  .uploadBtn,
-  .adminBtn {
-    padding: 5px 12px;
-    font-size: 0.75rem;
+  .modal {
+    padding: 25px;
   }
   
-  .navButtons {
-    gap: 8px;
+  .modal h2 {
+    font-size: 1.2rem;
   }
 }

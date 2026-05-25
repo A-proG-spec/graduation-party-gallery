@@ -4,8 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(15px);
+  background: #000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,11 +25,10 @@
   position: absolute;
   top: 25px;
   right: 25px;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
+  background: #ff3366;
+  color: #fff;
+  border: none;
+  border-radius: 0px;
   width: 45px;
   height: 45px;
   font-size: 1.5rem;
@@ -43,7 +41,7 @@
 }
 
 .closeBtn:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: #ff0055;
   transform: scale(1.05);
 }
 
@@ -51,11 +49,10 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
+  background: rgba(0, 255, 255, 0.2);
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  border-radius: 0px;
   width: 55px;
   height: 55px;
   font-size: 2rem;
@@ -68,7 +65,7 @@
 }
 
 .navBtn:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(0, 255, 255, 0.4);
   transform: translateY(-50%) scale(1.05);
 }
 
@@ -96,49 +93,51 @@
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(15px);
-  color: white;
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
   padding: 18px 28px;
-  border-radius: 20px;
+  border-radius: 0px;
   min-width: 280px;
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid #00ffff;
 }
 
 .infoRow {
   margin-bottom: 10px;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .label {
-  font-weight: 600;
+  font-weight: 700;
   margin-right: 12px;
-  color: #ffd700;
+  color: #00ffff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .value {
-  color: white;
+  color: #fff;
   font-weight: 400;
 }
 
 .adminDeleteBtn {
   margin-top: 12px;
-  background: rgba(231, 76, 60, 0.9);
-  backdrop-filter: blur(5px);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: #ff3366;
+  color: #fff;
+  border: none;
   padding: 10px 20px;
-  border-radius: 50px;
+  border-radius: 0px;
   cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 0.8rem;
+  font-weight: 600;
   transition: all 0.3s ease;
   font-family: 'Outfit', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .adminDeleteBtn:hover {
-  background: rgba(231, 76, 60, 1);
+  background: #ff0055;
   transform: translateY(-2px);
 }
 
@@ -164,7 +163,7 @@
   }
   
   .infoRow {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     margin-bottom: 8px;
   }
   
@@ -182,23 +181,6 @@
   
   .adminDeleteBtn {
     padding: 8px 16px;
-    font-size: 0.85rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .navBtn {
-    width: 35px;
-    height: 35px;
-    font-size: 1.2rem;
-  }
-  
-  .photoInfo {
-    padding: 10px 15px;
-    min-width: 200px;
-  }
-  
-  .infoRow {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
   }
 }

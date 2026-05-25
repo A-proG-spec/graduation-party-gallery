@@ -8,19 +8,19 @@
 .emptyState {
   text-align: center;
   padding: 80px 30px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px);
-  border-radius: 30px;
+  background: #0a0a0a;
+  border-radius: 0px;
   margin: 60px auto;
   max-width: 550px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border: 1px solid #222;
 }
 
 .emptyState p {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
+  font-size: 1rem;
+  color: #666;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 @media (max-width: 768px) {
@@ -36,7 +36,7 @@
   }
   
   .emptyState p {
-    font-size: 1rem;
+    font-size: 0.85rem;
   }
 }
 

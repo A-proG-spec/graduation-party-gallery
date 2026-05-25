@@ -1,5 +1,5 @@
 /* Import Outfit font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 
 * {
   margin: 0;
@@ -9,13 +9,13 @@
 
 body {
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #f0f0f0;
+  background: #0a0a0a;
   min-height: 100vh;
-  color: #000000;
+  color: #ffffff;
   position: relative;
 }
 
-/* Background image without blur */
+/* Dark gradient background */
 body::before {
   content: '';
   position: fixed;
@@ -23,10 +23,7 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('../public/background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.05), #0a0a0a 90%);
   z-index: -1;
 }
 
@@ -46,37 +43,37 @@ button {
   text-align: center;
   padding: 60px;
   font-size: 1.2rem;
-  color: #666;
-  background: white;
+  color: #00ffff;
+  background: rgba(0, 0, 0, 0.8);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
 }
 
 .error {
   text-align: center;
   padding: 60px;
-  color: #dc3545;
+  color: #ff3366;
   font-size: 1.1rem;
-  background: white;
+  background: rgba(0, 0, 0, 0.8);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid rgba(255, 51, 102, 0.3);
 }
 
-/* Scrollbar styling */
+/* Scrollbar styling - cyberpunk */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #e0e0e0;
-  border-radius: 10px;
+  background: #1a1a1a;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 10px;
+  background: #00ffff;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #ff3366;
 }

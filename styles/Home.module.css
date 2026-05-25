@@ -11,41 +11,34 @@
   text-align: center;
   padding-top: 50px;
   font-size: 3rem;
-  font-weight: 800;
+  font-weight: 900;
+  background: linear-gradient(135deg, #00ffff, #ff3366, #00ffff);
   -webkit-background-clip: text;
   background-clip: text;
-  color: white;
+  color: transparent;
   margin-bottom: 15px;
   letter-spacing: -1px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
 }
 
 .subtitle {
   text-align: center;
-  color:white;
-  font-size: 1.2rem;
+  color: #888;
+  font-size: 1rem;
   margin-bottom: 40px;
   font-weight: 400;
-  backdrop-filter: blur(5px);
-  display: inline-block;
-  width: auto;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 8px 24px;
-
-  border-radius: 50px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 @media (max-width: 768px) {
   .title {
-    font-size: 2rem;
+    font-size: 1.8rem;
     padding-top: 30px;
   }
   
   .subtitle {
-    font-size: 0.95rem;
-    padding: 6px 18px;
+    font-size: 0.8rem;
   }
   
   .main {
