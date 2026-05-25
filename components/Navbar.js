@@ -1,31 +1,81 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Navbar.module.css';
 
-export default function Navbar({ isAdminMode, onAdminLogin, onAdminLogout, onUploadClick }) {
+export default function Navbar({
+  onAdminLogin,
+  onAdminLogout,
+  onUploadClick,
+}) {
+  const [mounted, setMounted] = useState(false);
+  const [isAdminMode, setIsAdminMode] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    setMounted(true);
+    const stored = localStorage.getItem('adminMode');
+    if (stored === 'true') setIsAdminMode(true);
+  }, []);
+
+  const handleLogin = () => {
+    const adminUsername = process.env.NEXT_PUBLIC_ADMIN_USERNAME;
+    const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+    
+    if (username === adminUsername && password === adminPassword) {
+      localStorage.setItem('adminMode', 'true');
+      setIsAdminMode(true);
+      onAdminLogin?.();
+      setShowLoginModal(false);
+      setUsername('');
+      setPassword('');
+    } else {
+      alert('Invalid username or password');
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.setItem('adminMode', 'false');
+    setIsAdminMode(false);
+    onAdminLogout?.();
+  };
+
+  if (!mounted) return null;
 
   return (
     <>
       <nav className={styles.navbar}>
         <div className={styles.navContainer}>
           <div className={styles.logo}>
-            🎓 Graduation Party Gallery
+            Graduation Gallery
           </div>
-          
+
           <div className={styles.navButtons}>
-            <button onClick={onUploadClick} className={styles.uploadBtn}>
-              📸 Upload Photo
+            {/* Upload button always visible for everyone */}
+            <button
+              onClick={onUploadClick}
+              className={styles.uploadBtn}
+            >
+              Upload Photo
             </button>
-            
+
             {isAdminMode ? (
               <div className={styles.adminControls}>
-                <span className={styles.adminBadge}>Admin Mode</span>
-                <button onClick={onAdminLogout} className={styles.logoutBtn}>
+                <span className={styles.adminBadge}>
+                  Admin Mode
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className={styles.logoutBtn}
+                >
                   Logout
                 </button>
               </div>
             ) : (
-              <button onClick={() => setShowLoginModal(true)} className={styles.adminBtn}>
+              <button
+                onClick={() => setShowLoginModal(true)}
+                className={styles.adminBtn}
+              >
                 Admin Login
               </button>
             )}
@@ -40,29 +90,22 @@ export default function Navbar({ isAdminMode, onAdminLogin, onAdminLogout, onUpl
             <h2>Admin Login</h2>
             <input
               type="text"
-              id="adminUsername"
               placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className={styles.input}
+              onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
             />
             <input
               type="password"
-              id="adminPassword"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className={styles.input}
+              onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
             />
             <div className={styles.modalButtons}>
-              <button onClick={() => {
-                const username = document.getElementById('adminUsername').value;
-                const password = document.getElementById('adminPassword').value;
-                
-                if (username === process.env.NEXT_PUBLIC_ADMIN_USERNAME && 
-                    password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
-                  onAdminLogin();
-                  setShowLoginModal(false);
-                } else {
-                  alert('Invalid username or password');
-                }
-              }} className={styles.loginSubmitBtn}>
+              <button onClick={handleLogin} className={styles.loginSubmitBtn}>
                 Login
               </button>
               <button onClick={() => setShowLoginModal(false)} className={styles.cancelBtn}>
