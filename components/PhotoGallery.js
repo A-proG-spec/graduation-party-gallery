@@ -3,8 +3,15 @@ import PhotoCard from './PhotoCard';
 import LightboxModal from './LightboxModal';
 import styles from './PhotoGallery.module.css';
 
-export default function PhotoGallery({ photos, isAdminMode, onDelete, onRefresh }) {
+export default function PhotoGallery({
+  photos = [],
+  isAdminMode,
+  onDelete,
+  onRefresh,
+}) {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(null);
+
+  const safePhotos = Array.isArray(photos) ? photos : [];
 
   const handlePhotoClick = (index) => {
     setSelectedPhotoIndex(index);
@@ -21,7 +28,7 @@ export default function PhotoGallery({ photos, isAdminMode, onDelete, onRefresh 
   };
 
   const handleNextPhoto = () => {
-    if (selectedPhotoIndex < photos.length - 1) {
+    if (selectedPhotoIndex < safePhotos.length - 1) {
       setSelectedPhotoIndex(selectedPhotoIndex + 1);
     }
   };
@@ -29,7 +36,7 @@ export default function PhotoGallery({ photos, isAdminMode, onDelete, onRefresh 
   const handleDelete = async (photoId) => {
     const username = process.env.NEXT_PUBLIC_ADMIN_USERNAME;
     const password = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
-    
+
     try {
       const response = await fetch(`/api/photos/${photoId}`, {
         method: 'DELETE',
@@ -38,7 +45,7 @@ export default function PhotoGallery({ photos, isAdminMode, onDelete, onRefresh 
         },
         body: JSON.stringify({ username, password }),
       });
-      
+
       if (response.ok) {
         onRefresh();
       } else {
@@ -50,10 +57,12 @@ export default function PhotoGallery({ photos, isAdminMode, onDelete, onRefresh 
     }
   };
 
-  if (photos.length === 0) {
+  if (!safePhotos.length) {
     return (
       <div className={styles.emptyState}>
-        <p>No photos uploaded yet. Be the first to share your graduation memories! 🎓</p>
+        <p>
+          No photos uploaded yet. Be the first to share your graduation memories! 🎓
+        </p>
       </div>
     );
   }
@@ -61,7 +70,7 @@ export default function PhotoGallery({ photos, isAdminMode, onDelete, onRefresh 
   return (
     <>
       <div className={styles.gallery}>
-        {photos.map((photo, index) => (
+        {safePhotos.map((photo, index) => (
           <PhotoCard
             key={photo._id}
             photo={photo}
@@ -71,13 +80,17 @@ export default function PhotoGallery({ photos, isAdminMode, onDelete, onRefresh 
           />
         ))}
       </div>
-      
+
       {selectedPhotoIndex !== null && (
         <LightboxModal
-          photo={photos[selectedPhotoIndex]}
+          photo={safePhotos[selectedPhotoIndex]}
           onClose={handleCloseLightbox}
           onPrev={selectedPhotoIndex > 0 ? handlePrevPhoto : null}
-          onNext={selectedPhotoIndex < photos.length - 1 ? handleNextPhoto : null}
+          onNext={
+            selectedPhotoIndex < safePhotos.length - 1
+              ? handleNextPhoto
+              : null
+          }
           isAdminMode={isAdminMode}
           onDelete={handleDelete}
         />
