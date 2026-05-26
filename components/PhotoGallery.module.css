@@ -29,12 +29,12 @@
     gap: 20px;
     padding: 30px 0;
   }
-  
+
   .emptyState {
     padding: 50px 20px;
     margin: 40px auto;
   }
-  
+
   .emptyState p {
     font-size: 0.85rem;
   }
@@ -42,7 +42,8 @@
 
 @media (max-width: 480px) {
   .gallery {
-    grid-template-columns: 1fr;
-    gap: 25px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 20px 0;
   }
 }
