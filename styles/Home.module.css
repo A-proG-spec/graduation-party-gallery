@@ -30,7 +30,28 @@
   letter-spacing: 1px;
   text-transform: uppercase;
 }
+/* Add this to existing Home.module.css */
+.galleryHeader {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
+.backToHomeBtn {
+  background: transparent;
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.backToHomeBtn:hover {
+  background: rgba(0, 255, 255, 0.1);
+  transform: translateX(-5px);
+}
 @media (max-width: 768px) {
   .title {
     font-size: 1.8rem;

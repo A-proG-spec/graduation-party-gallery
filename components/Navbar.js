@@ -1,120 +1,125 @@
+// components/Navbar.js
 import { useEffect, useState } from 'react';
+import { useSession, signIn, signOut } from 'next-auth/react';
+import Link from 'next/link';
 import styles from './Navbar.module.css';
 
-export default function Navbar({
-  onAdminLogin,
-  onAdminLogout,
-  onUploadClick,
-}) {
+export default function Navbar({ onUploadClick, onViewGallery, showGallery }) {
+  const { data: session, status } = useSession();
   const [mounted, setMounted] = useState(false);
-  const [isAdminMode, setIsAdminMode] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const stored = localStorage.getItem('adminMode');
-    if (stored === 'true') setIsAdminMode(true);
+    if (session?.user?.email === 'antenehwondwosen@gmail.com') {
+      setIsAdmin(true);
+      localStorage.setItem('isAdmin', 'true');
+    } else {
+      setIsAdmin(false);
+      localStorage.setItem('isAdmin', 'false');
+    }
+  }, [session]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setIsMenuOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleLogin = () => {
-    const adminUsername = process.env.NEXT_PUBLIC_ADMIN_USERNAME;
-    const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
-    
-    if (username === adminUsername && password === adminPassword) {
-      localStorage.setItem('adminMode', 'true');
-      setIsAdminMode(true);
-      onAdminLogin?.();
-      setShowLoginModal(false);
-      setUsername('');
-      setPassword('');
-    } else {
-      alert('Invalid username or password');
-    }
-  };
-
-  const handleLogout = () => {
-    localStorage.setItem('adminMode', 'false');
-    setIsAdminMode(false);
-    onAdminLogout?.();
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
 
   if (!mounted) return null;
 
   return (
-    <>
-      <nav className={styles.navbar}>
-        <div className={styles.navContainer}>
-          <div className={styles.logo}>
-            Graduation Gallery
-          </div>
+    <nav className={styles.navbar}>
+      <div className={styles.navContainer}>
+        <div className={styles.logoGroup}>
+          <button onClick={onViewGallery} className={styles.logoBtn} title="Home">
+            <span className={styles.logoText}>Graduation Gallery</span>
+          </button>
 
-          <div className={styles.navButtons}>
-            {/* Upload button always visible for everyone */}
-            <button
-              onClick={onUploadClick}
-              className={styles.uploadBtn}
-            >
-              Upload Photo
+          {/* Single desktop navigation block */}
+          <div className={styles.desktopNavLinks}>
+            <button onClick={onViewGallery} className={styles.navLinkBtn}>
+              {showGallery ? 'Home' : 'Gallery'}
             </button>
+            <Link href="/wishes" className={styles.navLinkBtn}>
+              Wishes
+            </Link>
+          </div>
+        </div>
 
-            {isAdminMode ? (
-              <div className={styles.adminControls}>
-                <span className={styles.adminBadge}>
-                  Admin Mode
-                </span>
-                <button
-                  onClick={handleLogout}
-                  className={styles.logoutBtn}
-                >
-                  Logout
-                </button>
+        {/* Mobile menu button */}
+        <button className={styles.menuButton} onClick={toggleMenu} aria-label="Menu">
+          <span className={`${styles.hamburger} ${isMenuOpen ? styles.open : ''}`}></span>
+        </button>
+
+        {/* Desktop buttons (user actions) */}
+        <div className={styles.desktopButtons}>
+          {status === 'loading' ? (
+            <span className={styles.statusText}>Loading...</span>
+          ) : session ? (
+            <>
+              <div className={styles.userInfo}>
+                <img src={session.user.image} alt={session.user.name} className={styles.avatar} />
+                <span className={styles.userName}>Hi, {session.user.name.split(' ')[0]}</span>
               </div>
+              <button onClick={onUploadClick} className={styles.uploadBtn}>Upload</button>
+              <button onClick={() => signOut()} className={styles.googleLogoutBtn}>Sign Out</button>
+              {isAdmin && <div className={styles.adminBadge}>👑 Admin</div>}
+            </>
+          ) : (
+            <button onClick={() => signIn('google')} className={styles.googleLoginBtn}>
+              Sign In with Google
+            </button>
+          )}
+        </div>
+
+        {/* Mobile menu overlay */}
+        <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.mobileMenuOpen : ''}`}>
+          <div className={styles.mobileMenuContent}>
+            {/* Mobile navigation links */}
+            <button onClick={() => { onViewGallery(); closeMenu(); }} className={styles.mobileNavLink}>
+              {showGallery ? '🏠 Home' : '📸 Gallery'}
+            </button>
+            <Link href="/wishes" className={styles.mobileNavLink} onClick={closeMenu}>
+              💌 Wishes
+            </Link>
+
+            <div className={styles.mobileDivider}></div>
+
+            {status === 'loading' ? (
+              <span className={styles.statusText}>Loading...</span>
+            ) : session ? (
+              <>
+                <div className={styles.mobileUserInfo}>
+                  <img src={session.user.image} alt={session.user.name} className={styles.mobileAvatar} />
+                  <div>
+                    <div className={styles.mobileUserName}>{session.user.name}</div>
+                    {isAdmin && <div className={styles.mobileAdminBadge}>👑 Admin</div>}
+                  </div>
+                </div>
+                <button onClick={() => { onUploadClick(); closeMenu(); }} className={styles.mobileUploadBtn}>
+                  📸 Upload Photo
+                </button>
+                <button onClick={() => { signOut(); closeMenu(); }} className={styles.mobileLogoutBtn}>
+                  Sign Out
+                </button>
+              </>
             ) : (
-              <button
-                onClick={() => setShowLoginModal(true)}
-                className={styles.adminBtn}
-              >
-                Admin Login
+              <button onClick={() => { signIn('google'); closeMenu(); }} className={styles.mobileGoogleLoginBtn}>
+                Sign In with Google
               </button>
             )}
           </div>
         </div>
-      </nav>
-
-      {/* Admin Login Modal */}
-      {showLoginModal && (
-        <div className={styles.modalOverlay} onClick={() => setShowLoginModal(false)}>
-          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-            <h2>Admin Login</h2>
-            <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className={styles.input}
-              onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={styles.input}
-              onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
-            />
-            <div className={styles.modalButtons}>
-              <button onClick={handleLogin} className={styles.loginSubmitBtn}>
-                Login
-              </button>
-              <button onClick={() => setShowLoginModal(false)} className={styles.cancelBtn}>
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+      </div>
+    </nav>
   );
 }

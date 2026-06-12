@@ -1,5 +1,5 @@
 .navbar {
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid #00ffff;
   padding: 1rem 0;
@@ -16,8 +16,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
+  position: relative;
+}
+
+.logoGroup {
+  display: flex;
+  align-items: center;
+  gap: 30px;
 }
 
 .logo {
@@ -31,10 +36,174 @@
   text-transform: uppercase;
 }
 
-.navButtons {
+/* Desktop Navigation Links */
+.desktopNavLinks {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+/* Replace the logo styles with these */
+.logoGroup {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.logoBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+.logoBtn:hover {
+  transform: translateY(-2px);
+  background: rgba(0, 255, 255, 0.1);
+}
+
+.logoIcon {
+  font-size: 1.8rem;
+  transition: transform 0.3s ease;
+}
+
+.logoBtn:hover .logoIcon {
+  transform: scale(1.1);
+}
+
+.logoText {
+  font-size: 1.3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #00ffff, #ff3366);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+}
+
+/* Remove old logo class if exists */
+.logo {
+  display: none;
+}
+
+.navLinkBtn {
+  background: transparent;
+  color: #a1a1aa;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+
+.navLinkBtn:hover {
+  color: #00ffff;
+  background: rgba(0, 255, 255, 0.1);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+.mobileNavLink {
+  background: transparent;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+  transition: color 0.2s;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.mobileNavLink:hover {
+  color: #00ffff;
+}
+
+/* Rest of your existing styles remain the same */
+.navLink {
+  color: #a1a1aa;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navLink:hover {
+  color: #00ffff;
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+/* Desktop Buttons */
+.desktopButtons {
   display: flex;
   gap: 15px;
   align-items: center;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #00ffff;
+}
+
+.userName {
+  font-size: 0.9rem;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.statusText {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.googleLoginBtn {
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.googleLoginBtn:hover {
+  background: #00ffff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.googleLogoutBtn {
+  background: transparent;
+  color: #ff3366;
+  border: 1px solid #ff3366;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.googleLogoutBtn:hover {
+  background: rgba(255, 51, 102, 0.1);
 }
 
 .uploadBtn {
@@ -48,6 +217,7 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .uploadBtn:hover {
@@ -56,171 +226,237 @@
   background: linear-gradient(135deg, #00ffff, #00ffff);
 }
 
-.adminBtn {
-  background: transparent;
-  color: #fff;
-  border: 1px solid #fff;
-  padding: 10px 20px;
-  border-radius: 0px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.adminBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: #00ffff;
-  color: #00ffff;
-}
-
-.adminControls {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
 .adminBadge {
-  background: #ff3366;
+  background: linear-gradient(135deg, #ff3366, #ff00cc);
   color: #fff;
   padding: 6px 14px;
-  border-radius: 0px;
+  border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
+  box-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
+  margin-left: 8px;
 }
 
-.logoutBtn {
+/* Mobile Menu Button */
+.menuButton {
+  display: none;
   background: transparent;
-  color: #fff;
-  border: 1px solid #ff3366;
-  padding: 8px 18px;
-  border-radius: 0px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 200;
 }
 
-.logoutBtn:hover {
-  background: rgba(255, 51, 102, 0.2);
-  border-color: #ff3366;
-  color: #ff3366;
+.hamburger {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #00ffff;
+  position: relative;
+  transition: all 0.3s ease;
 }
 
-/* Modal Styles - Cyberpunk */
-.modalOverlay {
+.hamburger::before,
+.hamburger::after {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 3px;
+  background: #00ffff;
+  transition: all 0.3s ease;
+}
+
+.hamburger::before {
+  top: -8px;
+}
+
+.hamburger::after {
+  bottom: -8px;
+}
+
+.hamburger.open {
+  background: transparent;
+}
+
+.hamburger.open::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.hamburger.open::after {
+  transform: rotate(-45deg);
+  bottom: 0;
+}
+
+/* Mobile Menu */
+.mobileMenu {
   position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(5px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal {
-  background: #0a0a0a;
-  padding: 40px;
-  border-radius: 0px;
-  width: 90%;
-  max-width: 420px;
-  border: 2px solid #00ffff;
-  box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
-}
-
-.modal h2 {
-  margin-bottom: 25px;
-  text-align: center;
-  color: #00ffff;
-  font-weight: 800;
-  font-size: 1.5rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.input {
+  left: -100%;
   width: 100%;
-  padding: 12px 15px;
-  margin-bottom: 18px;
-  background: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 0px;
-  font-size: 1rem;
-  color: #fff;
-  font-family: 'Outfit', sans-serif;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.98);
+  backdrop-filter: blur(20px);
+  z-index: 150;
+  transition: left 0.3s ease;
+  overflow-y: auto;
 }
 
-.input:focus {
-  outline: none;
-  border-color: #00ffff;
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+.mobileMenuOpen {
+  left: 0;
 }
 
-.input::placeholder {
-  color: #666;
-}
-
-.modalButtons {
+.mobileMenuContent {
   display: flex;
-  gap: 12px;
-  justify-content: center;
-  margin-top: 10px;
+  flex-direction: column;
+  padding: 80px 30px 40px;
+  gap: 20px;
 }
 
-.loginSubmitBtn {
+.mobileNavLink {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+  transition: color 0.2s;
+}
+
+.mobileNavLink:hover {
+  color: #00ffff;
+}
+
+.mobileDivider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00ffff, transparent);
+  margin: 10px 0;
+}
+
+.mobileUserInfo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobileAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #00ffff;
+}
+
+.mobileUserName {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.mobileAdminBadge {
+  background: linear-gradient(135deg, #ff3366, #ff00cc);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.mobileUploadBtn {
   background: linear-gradient(135deg, #00ffff, #00ccff);
   color: #000;
   border: none;
-  padding: 12px 24px;
-  border-radius: 0px;
-  font-size: 0.85rem;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.loginSubmitBtn:hover {
+.mobileUploadBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+.mobileLogoutBtn {
+  background: transparent;
+  color: #ff3366;
+  border: 2px solid #ff3366;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mobileLogoutBtn:hover {
+  background: rgba(255, 51, 102, 0.1);
+}
+
+.mobileGoogleLoginBtn {
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mobileGoogleLoginBtn:hover {
   background: #00ffff;
   box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
 }
 
+/* Remove old styles */
+.adminBtn,
+.logoutBtn,
+.modalOverlay,
+.modal,
+.modal h2,
+.input,
+.modalButtons,
+.loginSubmitBtn,
 .cancelBtn {
-  background: transparent;
-  color: #fff;
-  border: 1px solid #ff3366;
-  padding: 12px 24px;
-  border-radius: 0px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
+  display: none;
 }
 
-.cancelBtn:hover {
-  background: rgba(255, 51, 102, 0.2);
-  border-color: #ff3366;
-}
-
+/* Responsive Design */
 @media (max-width: 768px) {
+  .desktopNavLinks,
+  .desktopButtons {
+    display: none;
+  }
+
+  .menuButton {
+    display: block;
+  }
+
   .navContainer {
-    flex-direction: column;
-    text-align: center;
     padding: 0 20px;
   }
-  
+
   .logo {
     font-size: 1.1rem;
   }
-  
-  .modal {
-    padding: 25px;
+
+  .logoGroup {
+    gap: 0;
   }
-  
-  .modal h2 {
-    font-size: 1.2rem;
+}
+
+@media (min-width: 769px) {
+  .mobileMenu {
+    display: none;
   }
 }

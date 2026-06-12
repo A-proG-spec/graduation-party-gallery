@@ -2,41 +2,33 @@ import { useState } from 'react';
 import styles from './UploadModal.module.css';
 
 export default function UploadModal({ onClose, onUploadSuccess }) {
-  const [uploaderName, setUploaderName] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [preview, setPreview] = useState(null);
-  const [uploading, setUploading] = useState(false);
+  const [caption, setCaption] = useState('');
+  const [image, setImage] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleFileSelect = (e) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
-
-    if (file && file.type.startsWith('image/')) {
-      setSelectedFile(file);
-      setPreview(URL.createObjectURL(file));
-      setError('');
-    } else {
-      setError('Please select a valid image file');
+    if (file) {
+      setImage(file);
+      setPreviewUrl(URL.createObjectURL(file));
     }
   };
 
-  const handleUpload = async () => {
-    if (!uploaderName.trim()) {
-      setError('Please enter your name');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!image) {
+      setError('Please select an image to upload.');
       return;
     }
 
-    if (!selectedFile) {
-      setError('Please select a photo');
-      return;
-    }
-
-    setUploading(true);
+    setIsUploading(true);
     setError('');
 
     const formData = new FormData();
-    formData.append('uploaderName', uploaderName);
-    formData.append('image', selectedFile);
+    formData.append('image', image);
+    formData.append('caption', caption);
 
     try {
       const response = await fetch('/api/upload', {
@@ -44,83 +36,80 @@ export default function UploadModal({ onClose, onUploadSuccess }) {
         body: formData,
       });
 
+      const data = await response.json();
+
       if (response.ok) {
         onUploadSuccess();
         onClose();
       } else {
-        const data = await response.json();
         setError(data.error || 'Upload failed');
       }
     } catch (err) {
-      setError('Network error. Please try again.');
+      console.error(err);
+      setError('An error occurred during upload.');
     } finally {
-      setUploading(false);
+      setIsUploading(false);
     }
   };
 
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
-      <div
-        className={styles.modal}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h2>Upload Your Graduation Photo</h2>
-
-        <div className={styles.formGroup}>
-          <label>Your Name:</label>
-
-          <input
-            type="text"
-            value={uploaderName}
-            onChange={(e) => setUploaderName(e.target.value)}
-            placeholder="Enter your name"
-            className={styles.input}
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label>Select Photo:</label>
-
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileSelect}
-            className={styles.fileInput}
-          />
-        </div>
-
-        {preview && (
-          <div className={styles.preview}>
-            <img
-              src={preview}
-              alt="Preview"
-              className={styles.previewImage}
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <h2>Share a Memory</h2>
+        {error && <div className={styles.error}>{error}</div>}
+        
+        <form onSubmit={handleSubmit}>
+          <div className={styles.formGroup}>
+            <label htmlFor="caption">Caption / Memory Context</label>
+            <input
+              type="text"
+              id="caption"
+              placeholder="What's happening in this photo?"
+              value={caption}
+              onChange={(e) => setCaption(e.target.value)}
+              className={styles.input}
+              disabled={isUploading}
             />
           </div>
-        )}
 
-        {error && (
-          <div className={styles.error}>
-            {error}
+          <div className={styles.formGroup}>
+            <label htmlFor="image" className={styles.fileLabel}>
+              {previewUrl ? 'Change Image' : 'Select Image'}
+            </label>
+            <input
+              type="file"
+              id="image"
+              accept="image/*"
+              onChange={handleImageChange}
+              className={styles.fileInput}
+              disabled={isUploading}
+            />
           </div>
-        )}
 
-        <div className={styles.modalButtons}>
-          <button
-            onClick={handleUpload}
-            disabled={uploading}
-            className={styles.uploadBtn}
-          >
-            {uploading ? 'Uploading...' : 'Upload Photo'}
-          </button>
+          {previewUrl && (
+            <div className={styles.previewContainer}>
+              <img src={previewUrl} alt="Preview" className={styles.previewImage} />
+            </div>
+          )}
 
-          <button
-            onClick={onClose}
-            className={styles.cancelBtn}
-          >
-            Cancel
-          </button>
-        </div>
+          <div className={styles.modalButtons}>
+            <button 
+              type="submit" 
+              className={styles.submitBtn} 
+              disabled={isUploading}
+            >
+              {isUploading ? 'Uploading...' : 'Upload'}
+            </button>
+            <button 
+              type="button" 
+              onClick={onClose} 
+              className={styles.cancelBtn}
+              disabled={isUploading}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

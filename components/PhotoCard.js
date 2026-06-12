@@ -1,50 +1,75 @@
-import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 import styles from './PhotoCard.module.css';
 
-export default function PhotoCard({ photo, isAdminMode, onDelete, onClick }) {
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
+export default function PhotoCard({ photo, isAdminMode, onDelete, onRefresh, onPhotoClick }) {
+  const { data: session } = useSession();
+  
+  // Safety check arrays
+  const likes = photo.likes || [];
+  const isLiked = session ? likes.includes(session.user.email) : false;
+
+  const handleLike = async (e) => {
+    e.stopPropagation(); // Avoid opening the LightboxModal when clicking like
+    if (!session) {
+      alert('You must be signed in to like photos.');
+      return;
+
+    }
+
+    try {
+      const response = await fetch('/api/photos/like', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ photoId: photo._id }),
+      });
+      if (response.ok) onRefresh();
+    } catch (err) {
+      console.error('Failed to toggle like:', err);
+    }
   };
 
-  const handleDelete = (e) => {
+  const handleDeleteClick = async (e) => {
     e.stopPropagation();
-    if (confirm('Are you sure you want to delete this photo?')) {
-      onDelete(photo._id);
+    if (!confirm('Are you sure you want to delete this photo?')) return;
+
+    try {
+      const response = await fetch(`/api/photos/${photo._id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) onDelete();
+    } catch (err) {
+      console.error('Delete error:', err);
     }
   };
 
   return (
-    <div className={styles.photoCard} onClick={onClick}>
+    <div className={styles.card} onClick={() => onPhotoClick(photo)}>
       <div className={styles.imageContainer}>
-        <Image
-          src={photo.cloudinaryUrl}
-          alt={`By ${photo.uploaderName}`}
-          width={400}
-          height={400}
-          style={{ objectFit: 'cover' }}
-          loading="lazy"
-        />
-        {isAdminMode && (
-          <button 
-            onClick={handleDelete}
-            className={styles.deleteBtn}
-            title="Delete photo"
-          >
-            🗑️
-          </button>
-        )}
+        <img src={photo.cloudinaryUrl} alt={photo.caption || 'Graduation Memory'} className={styles.image} />
       </div>
       
-      <div className={styles.info}>
-        <div className={styles.uploaderName}>📸 {photo.uploaderName}</div>
-        <div className={styles.uploadDate}>📅 {formatDate(photo.uploadDate)}</div>
+      <div className={styles.cardInfo}>
+        <div className={styles.uploaderMeta}>
+          <img src={photo.uploaderImage} alt={photo.uploaderName} className={styles.uploaderAvatar} />
+          <span>{photo.uploaderName}</span>
+        </div>
+
+        {photo.caption && <p className={styles.caption}>{photo.caption}</p>}
+        
+        <div className={styles.actions}>
+          <button 
+            className={`${styles.likeBtn} ${isLiked ? styles.liked : ''}`} 
+            onClick={handleLike}
+          >
+            <span className={styles.heartIcon}>♥</span> {likes.length}
+          </button>
+
+          {isAdminMode && (
+            <button className={styles.deleteBtn} onClick={handleDeleteClick}>
+              Delete
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

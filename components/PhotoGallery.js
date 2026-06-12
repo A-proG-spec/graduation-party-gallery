@@ -47,6 +47,8 @@ export default function PhotoGallery({
       });
 
       if (response.ok) {
+        // If the deleted photo is currently open in the lightbox, close it
+        handleCloseLightbox();
         onRefresh();
       } else {
         alert('Failed to delete photo');
@@ -61,7 +63,7 @@ export default function PhotoGallery({
     return (
       <div className={styles.emptyState}>
         <p>
-          No photos uploaded yet. Be the first to share your graduation memories! 🎓
+          No photos uploaded yet. Be the first to share your graduation memories!
         </p>
       </div>
     );
@@ -76,7 +78,8 @@ export default function PhotoGallery({
             photo={photo}
             isAdminMode={isAdminMode}
             onDelete={() => handleDelete(photo._id)}
-            onClick={() => handlePhotoClick(index)}
+            onRefresh={onRefresh} // Added to track active state updates for likes
+            onPhotoClick={() => handlePhotoClick(index)} // Matched to PhotoCard's internal prop name
           />
         ))}
       </div>
@@ -85,6 +88,7 @@ export default function PhotoGallery({
         <LightboxModal
           photo={safePhotos[selectedPhotoIndex]}
           onClose={handleCloseLightbox}
+          onRefresh={onRefresh} // Passed down so adding comments updates counts on the main page
           onPrev={selectedPhotoIndex > 0 ? handlePrevPhoto : null}
           onNext={
             selectedPhotoIndex < safePhotos.length - 1

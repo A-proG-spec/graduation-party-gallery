@@ -1,12 +1,17 @@
-import { IncomingForm } from 'formidable';
-import cloudinary from '../../lib/cloudinary';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from './auth/[...nextauth]';
 import clientPromise from '../../lib/mongodb';
-import fs from 'fs';
+import cloudinary from 'cloudinary';
+import formidable from 'formidable';
+
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export const config = {
-  api: {
-    bodyParser: false,
-  },
+  api: { bodyParser: false },
 };
 
 export default async function handler(req, res) {
@@ -14,55 +19,50 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  try {
-    // Parse the incoming form data
-    const form = new IncomingForm();
-    
-    const { fields, files } = await new Promise((resolve, reject) => {
-      form.parse(req, (err, fields, files) => {
-        if (err) reject(err);
-        resolve({ fields, files });
-      });
-    });
+  const session = await getServerSession(req, res, authOptions);
+  if (!session) {
+    return res.status(401).json({ error: 'Unauthorized. Please login with Google.' });
+  }
 
-    const uploaderName = fields.uploaderName[0];
-    const imageFile = files.image[0];
+  // Connect using native MongoClient
+  const client = await clientPromise;
+  const db = client.db();
 
-    if (!uploaderName || !imageFile) {
-      return res.status(400).json({ error: 'Missing uploader name or image' });
+  const form = formidable({});
+  
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error parsing form files' });
     }
 
-    // Upload to Cloudinary
-    const result = await cloudinary.uploader.upload(imageFile.filepath, {
-      folder: 'graduation_party',
-    });
+    const file = files.image?.[0] || files.image;
+    const caption = fields.caption?.[0] || fields.caption || '';
 
-    // Delete temporary file
-    fs.unlinkSync(imageFile.filepath);
+    if (!file) {
+      return res.status(400).json({ error: 'No image file provided' });
+    }
 
-    // Save to MongoDB
-    const client = await clientPromise;
-    const db = client.db('graduation_party_gallery');
-    
-    const photoDoc = {
-      cloudinaryUrl: result.secure_url,
-      cloudinaryPublicId: result.public_id,
-      uploaderName: uploaderName,
-      uploadDate: new Date(),
-      originalFilename: imageFile.originalFilename || '',
-    };
+    try {
+      const uploadResult = await cloudinary.v2.uploader.upload(file.filepath, {
+        folder: 'graduation_gallery',
+      });
 
-    const result_db = await db.collection('photos').insertOne(photoDoc);
+      const newPhoto = {
+        cloudinaryUrl: uploadResult.secure_url,
+        publicId: uploadResult.public_id,
+        caption: caption,
+        uploaderName: session.user.name,
+        uploaderEmail: session.user.email,
+        uploaderImage: session.user.image,
+        likes: [],
+        uploadDate: new Date(),
+      };
 
-    res.status(200).json({
-      success: true,
-      photo: {
-        id: result_db.insertedId,
-        ...photoDoc,
-      },
-    });
-  } catch (error) {
-    console.error('Upload error:', error);
-    res.status(500).json({ error: 'Upload failed: ' + error.message });
-  }
+      await db.collection('photos').insertOne(newPhoto);
+      return res.status(201).json(newPhoto);
+    } catch (uploadError) {
+      console.error(uploadError);
+      return res.status(500).json({ error: 'Cloudinary or Database save error' });
+    }
+  });
 }

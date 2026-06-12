@@ -1,0 +1,148 @@
+.container {
+  background-color: #09090b;
+  min-height: 100vh;
+  color: #ffffff;
+}
+
+.main {
+  padding: 40px 0;
+}
+
+.title {
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #a1a1aa;
+  margin-bottom: 40px;
+  font-size: 1.1rem;
+}
+
+.wishForm {
+  background: #121214;
+  border: 1px solid #222225;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 600px;
+  margin: 0 auto 50px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.wishForm textarea {
+  background: #1a1a1e;
+  border: 1px solid #2a2a30;
+  border-radius: 8px;
+  padding: 14px;
+  color: #ffffff;
+  font-size: 1rem;
+  min-height: 100px;
+  resize: vertical;
+  outline: none;
+}
+
+.wishForm textarea:focus {
+  border-color: #00ffff;
+}
+
+.wishForm button {
+  background: #00ffff;
+  color: #000000;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.wishForm button:hover {
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+}
+
+.loginPrompt {
+  background: rgba(26, 26, 30, 0.6);
+  border: 1px dashed #333338;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 50px auto;
+  color: #a1a1aa;
+}
+
+.wishesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.wishCard {
+  background: #121214;
+  border: 1px solid #222225;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.userAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #2a2a30;
+}
+
+.cardHeader h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #ffffff;
+}
+.deleteWishBtn {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: auto;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.deleteWishBtn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+.date {
+  font-size: 0.75rem;
+  color: #666666;
+}
+
+.message {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #e4e4e7;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}

@@ -1,3 +1,5 @@
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '../auth/[...nextauth]';
 import clientPromise from '../../../lib/mongodb';
 import cloudinary from '../../../lib/cloudinary';
 import { ObjectId } from 'mongodb';
@@ -8,25 +10,17 @@ export default async function handler(req, res) {
   }
 
   const { id } = req.query;
+  
+  // Check admin via session
+  const session = await getServerSession(req, res, authOptions);
+  
+  if (!session || session.user.email !== 'antenehwondwosen@gmail.com') {
+    return res.status(403).json({ error: 'Forbidden - Admin only' });
+  }
 
   try {
-    let { username, password } =
-      typeof req.body === 'string'
-        ? JSON.parse(req.body)
-        : req.body || {};
-
-    const ADMIN_USERNAME = process.env.NEXT_PUBLIC_ADMIN_USERNAME;
-    const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
-
-    if (
-      username !== ADMIN_USERNAME ||
-      password !== ADMIN_PASSWORD
-    ) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-
     const client = await clientPromise;
-    const db = client.db('graduation_party_gallery');
+    const db = client.db();
 
     const photo = await db.collection('photos').findOne({
       _id: new ObjectId(id),
@@ -36,14 +30,19 @@ export default async function handler(req, res) {
       return res.status(404).json({ error: 'Photo not found' });
     }
 
-    // delete from cloudinary
-    if (photo.cloudinaryPublicId) {
-      await cloudinary.uploader.destroy(photo.cloudinaryPublicId);
+    // Delete from Cloudinary
+    if (photo.publicId) {
+      await cloudinary.uploader.destroy(photo.publicId);
     }
 
-    // delete from DB
+    // Delete from DB
     await db.collection('photos').deleteOne({
       _id: new ObjectId(id),
+    });
+
+    // Also delete all comments for this photo
+    await db.collection('comments').deleteMany({
+      photoId: id,
     });
 
     res.status(200).json({ success: true });
