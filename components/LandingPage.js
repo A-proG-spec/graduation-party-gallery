@@ -1,4 +1,3 @@
-// components/LandingPage.js
 import { useEffect, useState } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
@@ -11,25 +10,25 @@ export default function LandingPage() {
 
   const quotes = [
     {
-      text: "The tassel was worth the hassle!",
-      author: "Graduation Saying"
-    },
-    {
-      text: "Education is the most powerful weapon which you can use to change the world.",
-      author: "Nelson Mandela"
-    },
-    {
-      text: "The future belongs to those who believe in the beauty of their dreams.",
-      author: "Eleanor Roosevelt"
-    },
-    {
-      text: "Your graduation is not the end; it's the beginning of your next chapter.",
-      author: "Unknown"
-    },
-    {
-      text: "Dream big, work hard, stay focused, and surround yourself with good people.",
-      author: "Graduate Wisdom"
-    }
+    text: "Today we celebrate not only a diploma, but years of dedication, courage, and growth.",
+    author: "Graduation Celebration"
+  },
+  {
+    text: "Behind every successful graduate is a story of hard work and determination.",
+    author: "Family Message"
+  },
+  {
+    text: "The future is bright, and this is only the beginning.",
+    author: "Graduation Wish"
+  },
+  {
+    text: "May your dreams be bigger than your fears and your actions louder than your words.",
+    author: "Celebration Quote"
+  },
+  {
+    text: "A proud day for family, friends, and a remarkable graduate.",
+    author: "Graduation Day"
+  }
   ];
 
   useEffect(() => {
@@ -66,23 +65,23 @@ export default function LandingPage() {
   const features = [
     {
       icon: "",
-      title: "Share Memories",
-      description: "Upload your favorite graduation photos and celebrate the achievement with friends and family."
+      title: "Share Party Photos",
+      description: "Upload photos from Addis's graduation party at home – capture the joy, the decorations, and her proud smile."
     },
     {
       icon: "",
       title: "Leave Wishes",
-      description: "Write congratulatory messages, advice, and wishes for the graduate's bright future."
+      description: "Write congratulatory messages and words of encouragement for Addis's bright future."
     },
     {
       icon: "",
       title: "Like & Comment",
-      description: "Engage with photos by liking them and leaving encouraging comments."
+      description: "Engage with each memory by liking and commenting on favorite photos from the celebration."
     },
     {
       icon: "",
       title: "Guestbook",
-      description: "Sign the digital guestbook with your wishes and memories of the celebration."
+      description: "Sign the digital guestbook with your stories, advice, and love for Addis."
     }
   ];
 
@@ -92,13 +91,13 @@ export default function LandingPage() {
       <section id="hero" className={`${styles.hero} ${isVisible.hero ? styles.visible : ''}`}>
         <div className={styles.heroOverlay}></div>
         <div className={styles.heroContent}>
-          <div className={styles.heroBadge}>🎓 Class of 2026</div>
+          <div className={styles.heroBadge}>Class of 2026</div>
           <h1 className={styles.heroTitle}>
-            Celebrate Your
-            <span className={styles.gradientText}> Graduation Journey</span>
+            Celebrate Addis's Graduation Party
+            <span className={styles.gradientText}> at Home</span>
           </h1>
           <p className={styles.heroSubtitle}>
-            A digital gallery to capture, share, and celebrate every precious moment of your graduation day
+            Addis's family invites you to relive every moment of her special day - a warm, intimate graduation celebration hosted in her home.
           </p>
           
           {/* Rotating Quote */}
@@ -125,38 +124,35 @@ export default function LandingPage() {
       <section id="purpose" className={`${styles.purpose} ${isVisible.purpose ? styles.visible : ''}`}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <span className={styles.sectionTag}>Our Mission</span>
-            <h2 className={styles.sectionTitle}>Why We Created This Gallery</h2>
+            <span className={styles.sectionTag}>Her Story</span>
+            <h2 className={styles.sectionTitle}>A Home Celebration to Remember</h2>
             <p className={styles.sectionSubtitle}>
-              Every graduation tells a unique story of perseverance, growth, and achievement
+              Graduating is a milestone, but celebrating at home makes it even sweeter for Addis and her loved ones.
             </p>
           </div>
 
           <div className={styles.purposeContent}>
             <div className={styles.purposeImage}>
-              <img src="/download.jpg" alt="Graduation Celebration" />
-              <div className={styles.imageCaption}>Creating memories that last a lifetime</div>
+              <img src="/download.jpg" alt="Addis's graduation celebration at home" />
+              <div className={styles.imageCaption}>Addis's joy on her graduation day at home</div>
             </div>
             <div className={styles.purposeText}>
               <div className={styles.purposeCard}>
-                <h3>Preserve Precious Moments</h3>
+                <h3>Celebrate Addis's Big Day at Home</h3>
                 <p>
-                  Graduation day is one of life's most significant milestones. Our platform helps you 
-                  capture every smile, tear of joy, and proud moment so you can relive them forever.
+                  From the proud moment she receives her diploma to cutting the cake with family, every memory of Addis's home graduation party is preserved here.
                 </p>
               </div>
               <div className={styles.purposeCard}>
-                <h3>Connect Loved Ones</h3>
+                <h3>Bring Family and Friends Together</h3>
                 <p>
-                  Bring together family and friends from around the world to share in the celebration, 
-                  even if they couldn't attend in person.
+                  Even those who couldn't attend her home party can share photos, videos, and heartfelt messages to join the celebration.
                 </p>
               </div>
               <div className={styles.purposeCard}>
-                <h3>Inspire Future Graduates</h3>
+                <h3>A Legacy of Determination</h3>
                 <p>
-                  Create a legacy of inspiration for future graduates by showcasing the joy and 
-                  accomplishment that comes with earning your degree.
+                  Addis's achievement inspires others to pursue their dreams; this celebration showcases how dedication and family support lead to success.
                 </p>
               </div>
             </div>
@@ -168,10 +164,10 @@ export default function LandingPage() {
       <section id="features" className={`${styles.features} ${isVisible.features ? styles.visible : ''}`}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <span className={styles.sectionTag}>Features</span>
-            <h2 className={styles.sectionTitle}>What You Can Do Here</h2>
+            <span className={styles.sectionTag}>Party Features</span>
+            <h2 className={styles.sectionTitle}>Ways to Celebrate Addis</h2>
             <p className={styles.sectionSubtitle}>
-              Everything you need to celebrate and share your graduation memories
+              Share your love and memories of her home graduation party.
             </p>
           </div>
 
@@ -194,11 +190,10 @@ export default function LandingPage() {
       <section id="cta" className={`${styles.cta} ${isVisible.cta ? styles.visible : ''}`}>
         <div className={styles.container}>
           <div className={styles.ctaContent}>
-            <h2 className={styles.ctaTitle}>Ready to Share Your Journey?</h2>
+            <h2 className={styles.ctaTitle}>Share Your Wishes for Addis</h2>
             <p className={styles.ctaText}>
-              Join our community and celebrate your achievements with the world
+              Even if you couldn't attend the party, you can still leave a heartfelt message and celebrate her achievement.
             </p>
-  
           </div>
         </div>
       </section>
