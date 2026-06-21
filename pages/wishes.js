@@ -94,7 +94,7 @@ export default function Wishes() {
   };
 
   const handleViewGallery = () => {
-    router.push('/');
+    router.push('/?view=gallery');
   };
 
   if (!isMounted) {

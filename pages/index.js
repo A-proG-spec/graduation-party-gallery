@@ -1,6 +1,7 @@
 // pages/index.js
 import { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import Navbar from '../components/Navbar';
 import UploadModal from '../components/UploadModal';
 import PhotoGallery from '../components/PhotoGallery';
@@ -9,6 +10,7 @@ import styles from '../styles/Home.module.css';
 
 export default function Home() {
   const { data: session } = useSession();
+  const router = useRouter();
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -20,6 +22,14 @@ export default function Home() {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  // Read view from URL query parameter
+  useEffect(() => {
+    if (router.isReady) {
+      const { view } = router.query;
+      setShowGallery(view === 'gallery');
+    }
+  }, [router.isReady, router.query]);
 
   // Check admin status from session
   useEffect(() => {
@@ -55,11 +65,17 @@ export default function Home() {
     fetchPhotos();
   };
 
-  const handleToggleGallery = () => {
-    setShowGallery(prev => !prev);
+  // Navigate to gallery view
+  const handleViewGallery = () => {
+    router.push('/?view=gallery', undefined, { shallow: true });
   };
 
-  // Prevent hydration mismatch - only render after client-side mount
+  // Navigate to landing view (remove query)
+  const handleViewLanding = () => {
+    router.push('/', undefined, { shallow: true });
+  };
+
+  // Prevent hydration mismatch
   if (!isMounted) {
     return null;
   }
@@ -70,10 +86,10 @@ export default function Home() {
       <>
         <Navbar 
           onUploadClick={() => setShowUploadModal(true)} 
-          onViewGallery={handleToggleGallery}
+          onViewGallery={handleViewGallery}
           showGallery={showGallery}
         />
-        <LandingPage />
+        <LandingPage onViewGallery={handleViewGallery} />
         {showUploadModal && (
           <UploadModal
             onClose={() => setShowUploadModal(false)}
@@ -89,14 +105,14 @@ export default function Home() {
     <div className={styles.container}>
       <Navbar 
         onUploadClick={() => setShowUploadModal(true)} 
-        onViewGallery={handleToggleGallery}
+        onViewGallery={handleViewLanding}
         showGallery={showGallery}
       />
       
       <main className={styles.main}>
         <div className="container">
           <div className={styles.galleryHeader}>
-            <h1 className={styles.title}>🎉 Graduation Memories 🎓</h1>
+            <h1 className={styles.title}>Graduation Memories</h1>
             <p className={styles.subtitle}>
               Share your special moments from the celebration!
             </p>

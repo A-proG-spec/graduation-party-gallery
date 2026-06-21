@@ -3,7 +3,7 @@ import { useSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
 import styles from './LandingPage.module.css';
 
-export default function LandingPage() {
+export default function LandingPage({ onViewGallery }) {
   const { data: session } = useSession();
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const [isVisible, setIsVisible] = useState({});
@@ -111,6 +111,11 @@ export default function LandingPage() {
             <Link href="#purpose" className={styles.secondaryBtn}>
               Learn More
             </Link>
+            {onViewGallery && (
+              <button onClick={onViewGallery} className={styles.primaryBtn}>
+                View Gallery
+              </button>
+            )}
           </div>
 
           <div className={styles.scrollIndicator}>

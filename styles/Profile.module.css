@@ -1,0 +1,132 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  color: #fff;
+  background: #0a0a0a;
+  min-height: 100vh;
+}
+
+.loader {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.2rem;
+  color: #ccc;
+  background: #0a0a0a;
+  min-height: 100vh;
+}
+
+.profileHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+  background: linear-gradient(135deg, #0f0f13, #1a1a2e);
+  padding: 2rem;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.avatarLarge {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #00ffff;
+  margin-bottom: 1rem;
+  object-fit: cover;
+}
+
+.profileHeader h1 {
+  font-size: 2rem;
+  margin: 0.5rem 0;
+  background: linear-gradient(135deg, #ffffff, #00ffff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.email {
+  color: #aaa;
+  margin-bottom: 1.5rem;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statValue {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #00ffff, #ff3366);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.statLabel {
+  font-size: 0.85rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.photosSection {
+  margin-top: 2rem;
+}
+
+.photosSection h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #00ffff;
+  padding-left: 1rem;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.noPhotos {
+  text-align: center;
+  padding: 3rem;
+  background: #121214;
+  border-radius: 16px;
+  color: #888;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  .profileHeader {
+    padding: 1.5rem;
+  }
+  .avatarLarge {
+    width: 90px;
+    height: 90px;
+  }
+  .stats {
+    gap: 1rem;
+  }
+  .statValue {
+    font-size: 1.5rem;
+  }
+  .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

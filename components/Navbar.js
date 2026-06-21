@@ -1,4 +1,3 @@
-// components/Navbar.js
 import { useEffect, useState } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
@@ -44,7 +43,6 @@ export default function Navbar({ onUploadClick, onViewGallery, showGallery }) {
             <span className={styles.logoText}>Graduation Gallery</span>
           </button>
 
-          {/* Single desktop navigation block */}
           <div className={styles.desktopNavLinks}>
             <button onClick={onViewGallery} className={styles.navLinkBtn}>
               {showGallery ? 'Home' : 'Gallery'}
@@ -52,15 +50,18 @@ export default function Navbar({ onUploadClick, onViewGallery, showGallery }) {
             <Link href="/wishes" className={styles.navLinkBtn}>
               Wishes
             </Link>
+            {session && (
+              <Link href="/profile" className={styles.navLinkBtn}>
+                Profile
+              </Link>
+            )}
           </div>
         </div>
 
-        {/* Mobile menu button */}
         <button className={styles.menuButton} onClick={toggleMenu} aria-label="Menu">
           <span className={`${styles.hamburger} ${isMenuOpen ? styles.open : ''}`}></span>
         </button>
 
-        {/* Desktop buttons (user actions) */}
         <div className={styles.desktopButtons}>
           {status === 'loading' ? (
             <span className={styles.statusText}>Loading...</span>
@@ -72,7 +73,7 @@ export default function Navbar({ onUploadClick, onViewGallery, showGallery }) {
               </div>
               <button onClick={onUploadClick} className={styles.uploadBtn}>Upload</button>
               <button onClick={() => signOut()} className={styles.googleLogoutBtn}>Sign Out</button>
-              {isAdmin && <div className={styles.adminBadge}>👑 Admin</div>}
+              {isAdmin && <div className={styles.adminBadge}>Admin</div>}
             </>
           ) : (
             <button onClick={() => signIn('google')} className={styles.googleLoginBtn}>
@@ -81,17 +82,19 @@ export default function Navbar({ onUploadClick, onViewGallery, showGallery }) {
           )}
         </div>
 
-        {/* Mobile menu overlay */}
         <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.mobileMenuOpen : ''}`}>
           <div className={styles.mobileMenuContent}>
-            {/* Mobile navigation links */}
             <button onClick={() => { onViewGallery(); closeMenu(); }} className={styles.mobileNavLink}>
-              {showGallery ? '🏠 Home' : '📸 Gallery'}
+              {showGallery ? 'Home' : 'Gallery'}
             </button>
             <Link href="/wishes" className={styles.mobileNavLink} onClick={closeMenu}>
-              💌 Wishes
+              Wishes
             </Link>
-
+            {session && (
+              <Link href="/profile" className={styles.mobileNavLink} onClick={closeMenu}>
+                Profile
+              </Link>
+            )}
             <div className={styles.mobileDivider}></div>
 
             {status === 'loading' ? (
@@ -102,11 +105,11 @@ export default function Navbar({ onUploadClick, onViewGallery, showGallery }) {
                   <img src={session.user.image} alt={session.user.name} className={styles.mobileAvatar} />
                   <div>
                     <div className={styles.mobileUserName}>{session.user.name}</div>
-                    {isAdmin && <div className={styles.mobileAdminBadge}>👑 Admin</div>}
+                    {isAdmin && <div className={styles.mobileAdminBadge}>Admin</div>}
                   </div>
                 </div>
                 <button onClick={() => { onUploadClick(); closeMenu(); }} className={styles.mobileUploadBtn}>
-                  📸 Upload Photo
+                  Upload Photo
                 </button>
                 <button onClick={() => { signOut(); closeMenu(); }} className={styles.mobileLogoutBtn}>
                   Sign Out

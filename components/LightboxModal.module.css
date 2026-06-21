@@ -362,14 +362,18 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .overlay {
-    padding: 0;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.9);
   }
 
   .lightboxContent {
     flex-direction: column;
-    height: 100vh;
     width: 100%;
-    border-radius: 0;
+    max-width: 95%;
+    height: 85vh;
+    max-height: 85vh;
+    border-radius: 24px;
+    overflow: hidden;
   }
   
   .imagePanel {
@@ -378,16 +382,20 @@
     border-bottom: 1px solid #1a1a1e;
     padding: 10px;
     min-height: 40vh;
+    max-height: 50vh;
   }
   
   .interactivePanel {
-    flex: 1.2;
-    padding: 16px;
+    flex: 1;
+    padding: 12px;
+    max-height: 45vh;
+    display: flex;
+    flex-direction: column;
   }
 
   .closeBtn {
-    top: 10px;
-    right: 10px;
+    top: 20px;
+    right: 20px;
     width: 36px;
     height: 36px;
     font-size: 1.5rem;
@@ -395,12 +403,13 @@
   }
 
   .photoHeader {
-    margin-bottom: 12px;
+    margin-bottom: 8px;
+    flex-shrink: 0;
   }
 
   .avatar {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
   }
 
   .photoHeader h3 {
@@ -409,13 +418,17 @@
 
   .mainCaption {
     font-size: 0.85rem;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     max-height: 60px;
+    overflow-y: auto;
   }
 
   .commentsList {
+    flex: 1;
     gap: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    max-height: calc(45vh - 150px); /* Adjust based on header and form */
+    min-height: 80px;
   }
 
   .commentAvatar {
@@ -457,40 +470,48 @@
   }
 
   .noComments {
-    padding: 30px 20px;
+    padding: 20px 20px;
   }
 
   .noComments span {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .noComments p {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 }
 
-/* Small phones */
+/* Small phones (<=480px) - make modal even more compact */
 @media (max-width: 480px) {
+  .lightboxContent {
+    max-width: 98%;
+    height: 80vh;
+  }
+
   .interactivePanel {
-    padding: 12px;
+    padding: 8px;
   }
 
   .photoHeader {
-    gap: 8px;
+    gap: 6px;
   }
 
   .avatar {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
   }
 
   .photoHeader h3 {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 
   .mainCaption {
-    font-size: 0.8rem;
-    line-height: 1.4;
+    font-size: 0.75rem;
+  }
+
+  .commentsList {
+    max-height: calc(80vh - 160px);
   }
 
   .commentBody {
@@ -507,36 +528,6 @@
 
   .commentInput {
     font-size: 0.8rem;
-    padding: 7px 12px;
-  }
-}
-
-/* Landscape mode on mobile */
-@media (max-width: 768px) and (orientation: landscape) {
-  .lightboxContent {
-    flex-direction: row;
-  }
-
-  .imagePanel {
-    flex: 1;
-    border-right: 1px solid #1a1a1e;
-    border-bottom: none;
-  }
-
-  .interactivePanel {
-    flex: 1;
-  }
-
-  .photoHeader {
-    margin-bottom: 8px;
-  }
-
-  .mainCaption {
-    font-size: 0.8rem;
-    margin-bottom: 8px;
-  }
-
-  .commentsList {
-    gap: 8px;
+    padding: 6px 12px;
   }
 }

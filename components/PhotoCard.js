@@ -3,7 +3,7 @@ import styles from './PhotoCard.module.css';
 
 export default function PhotoCard({ photo, isAdminMode, onDelete, onRefresh, onPhotoClick }) {
   const { data: session } = useSession();
-  
+
   // Safety check arrays
   const likes = photo.likes || [];
   const isLiked = session ? likes.includes(session.user.email) : false;
@@ -47,7 +47,7 @@ export default function PhotoCard({ photo, isAdminMode, onDelete, onRefresh, onP
       <div className={styles.imageContainer}>
         <img src={photo.cloudinaryUrl} alt={photo.caption || 'Graduation Memory'} className={styles.image} />
       </div>
-      
+
       <div className={styles.cardInfo}>
         <div className={styles.uploaderMeta}>
           <img src={photo.uploaderImage} alt={photo.uploaderName} className={styles.uploaderAvatar} />
@@ -55,17 +55,20 @@ export default function PhotoCard({ photo, isAdminMode, onDelete, onRefresh, onP
         </div>
 
         {photo.caption && <p className={styles.caption}>{photo.caption}</p>}
-        
+
         <div className={styles.actions}>
-          <button 
-            className={`${styles.likeBtn} ${isLiked ? styles.liked : ''}`} 
+          <button
+            className={`${styles.likeBtn} ${isLiked ? styles.liked : ''}`}
             onClick={handleLike}
           >
             <span className={styles.heartIcon}>♥</span> {likes.length}
           </button>
 
-          {isAdminMode && (
-            <button className={styles.deleteBtn} onClick={handleDeleteClick}>
+          {(isAdminMode || session?.user?.email === photo.uploaderEmail) && (
+            <button
+              className={styles.deleteBtn}
+              onClick={handleDeleteClick}
+            >
               Delete
             </button>
           )}
