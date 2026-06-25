@@ -1,4 +1,3 @@
-/* Import Outfit font from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 
 * {
@@ -15,7 +14,6 @@ body {
   position: relative;
 }
 
-/* Dark gradient background */
 body::before {
   content: '';
   position: fixed;
@@ -23,31 +21,27 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.05), #0a0a0a 90%);
+  background: none; /* remove gradient */
   z-index: -1;
 }
 
 button {
   cursor: pointer;
   font-family: 'Outfit', sans-serif;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 20px;
 }
 
 .loading {
   text-align: center;
   padding: 60px;
   font-size: 1.2rem;
-  color: #00ffff;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 12px;
-  border: 1px solid rgba(0, 255, 255, 0.3);
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+  color: #888;
 }
 
 .error {
@@ -55,25 +49,19 @@ button {
   padding: 60px;
   color: #ff3366;
   font-size: 1.1rem;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 51, 102, 0.3);
 }
 
-/* Scrollbar styling - cyberpunk */
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
-
 ::-webkit-scrollbar-track {
   background: #1a1a1a;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #00ffff;
-  border-radius: 4px;
+  background: #444;
+  border-radius: 3px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff3366;
+  background: #666;
 }

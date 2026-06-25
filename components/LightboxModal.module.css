@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.95);
+  background: rgba(0, 0, 0, 0.92);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,51 +16,39 @@
   position: absolute;
   top: 20px;
   right: 20px;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
+  background: none;
   border: none;
-  color: #ffffff;
+  color: #fff;
   font-size: 2rem;
   cursor: pointer;
-  line-height: 1;
-  opacity: 0.9;
-  transition: all 0.2s;
   z-index: 2100;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  opacity: 0.8;
+  transition: opacity 0.2s;
 }
 
 .closeBtn:hover {
   opacity: 1;
-  color: #ff3366;
-  transform: scale(1.1);
 }
 
 .lightboxContent {
   display: flex;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1100px;
   height: 85vh;
-  background: #0d0d0f;
-  border: 1px solid #222225;
-  border-radius: 16px;
+  background: #0a0a0a;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
 }
 
 .imagePanel {
   flex: 1.4;
-  background: #000000;
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  border-right: 1px solid #1a1a1e;
-  position: relative;
+  border-right: 1px solid #222;
 }
 
 .largeImage {
@@ -73,10 +61,10 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #121214;
+  background: #0a0a0a;
   padding: 20px;
-  box-sizing: border-box;
-  min-width: 0; /* Prevents flex overflow */
+  min-width: 0;
+  color: #fff;
 }
 
 .photoHeader {
@@ -88,8 +76,8 @@
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: 1px solid #333;
   object-fit: cover;
@@ -97,43 +85,36 @@
 
 .photoHeaderInfo {
   flex: 1;
-  min-width: 0;
 }
 
-.photoHeader h3 {
+.photoHeaderInfo h3 {
   margin: 0;
-  font-size: 1rem;
-  color: #ffffff;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-size: 0.95rem;
+  color: #fff;
 }
 
 .date {
-  margin: 2px 0 0 0;
+  margin: 2px 0 0;
   font-size: 0.7rem;
-  color: #666666;
+  color: #666;
 }
 
 .mainCaption {
-  color: #e4e4e7;
+  color: #ddd;
   font-size: 0.9rem;
-  line-height: 1.5;
+  line-height: 1.4;
   margin: 0 0 12px 0;
   flex-shrink: 0;
-  max-height: 80px;
-  overflow-y: auto;
 }
 
 .divider {
   border: 0;
   height: 1px;
-  background: #1a1a1e;
+  background: #222;
   margin-bottom: 12px;
   flex-shrink: 0;
 }
 
-/* Comments List */
 .commentsList {
   flex: 1;
   overflow-y: auto;
@@ -142,78 +123,49 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  min-height: 0;
 }
 
-/* Custom scrollbar */
 .commentsList::-webkit-scrollbar {
   width: 4px;
 }
-
 .commentsList::-webkit-scrollbar-track {
   background: transparent;
 }
-
 .commentsList::-webkit-scrollbar-thumb {
-  background: #2a2a30;
+  background: #444;
   border-radius: 4px;
-}
-
-.commentsList::-webkit-scrollbar-thumb:hover {
-  background: #00ffff;
 }
 
 .noComments {
   text-align: center;
   padding: 40px 20px;
-  color: #666666;
+  color: #666;
 }
-
 .noComments span {
-  font-size: 3rem;
+  font-size: 2.5rem;
   display: block;
-  margin-bottom: 12px;
-  opacity: 0.5;
-}
-
-.noComments p {
-  font-size: 0.9rem;
-  margin: 0;
+  margin-bottom: 10px;
 }
 
 .commentItem {
   display: flex;
   gap: 10px;
   align-items: flex-start;
-  position: relative;
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .commentAvatar {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
 }
 
 .commentBody {
-  background: #1a1a1e;
+  background: #1a1a1a;
   padding: 10px 14px;
   border-radius: 12px;
   flex: 1;
-  min-width: 0;
 }
 
 .commentHeader {
@@ -222,60 +174,43 @@
   align-items: baseline;
   gap: 8px;
   margin-bottom: 4px;
-  flex-wrap: wrap;
 }
 
 .commentUser {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #00ffff;
-  word-break: break-word;
+  color: #fff;
 }
 
 .commentTime {
   font-size: 0.65rem;
-  color: #666666;
-  flex-shrink: 0;
+  color: #666;
 }
 
 .commentText {
   margin: 0;
   font-size: 0.85rem;
-  color: #ffffff;
+  color: #ddd;
   line-height: 1.4;
   word-break: break-word;
-  white-space: pre-wrap;
 }
 
 .deleteCommentBtn {
-  background: rgba(255, 51, 102, 0.1);
+  background: transparent;
   border: none;
-  color: #ff3366;
+  color: #666;
   font-size: 1.2rem;
   cursor: pointer;
-  margin-left: 4px;
-  opacity: 0.6;
-  transition: all 0.2s;
-  padding: 0;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  padding: 0 4px;
+  transition: color 0.2s;
 }
-
 .deleteCommentBtn:hover {
-  opacity: 1;
-  transform: scale(1.1);
-  background: rgba(255, 51, 102, 0.2);
+  color: #ff3366;
 }
 
-/* Comment Form */
 .commentForm {
   flex-shrink: 0;
-  border-top: 1px solid #1a1a1e;
+  border-top: 1px solid #222;
   padding-top: 12px;
 }
 
@@ -287,31 +222,24 @@
 
 .commentInput {
   flex: 1;
-  background: #1a1a1e;
-  border: 1px solid #2a2a30;
+  background: #1a1a1a;
+  border: 1px solid #333;
   border-radius: 20px;
   padding: 10px 16px;
-  color: #ffffff;
+  color: #fff;
   font-size: 0.9rem;
   outline: none;
-  font-family: inherit;
   resize: none;
   max-height: 80px;
-  transition: all 0.2s;
+  transition: border-color 0.2s;
 }
-
 .commentInput:focus {
-  border-color: #00ffff;
-  box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
-}
-
-.commentInput:disabled {
-  opacity: 0.5;
+  border-color: #fff;
 }
 
 .commentSubmitBtn {
-  background: linear-gradient(135deg, #00ffff, #00ccff);
-  color: #000000;
+  background: #fff;
+  color: #000;
   border: none;
   width: 36px;
   height: 36px;
@@ -319,215 +247,52 @@
   font-weight: 700;
   font-size: 1.2rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
 }
-
-.commentSubmitBtn:hover:not(:disabled) {
-  transform: scale(1.05);
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-}
-
 .commentSubmitBtn:disabled {
   background: #444;
   color: #888;
   cursor: not-allowed;
-  transform: none;
 }
 
 .loginPrompt {
   text-align: center;
   padding: 16px;
-  background: rgba(26, 26, 30, 0.6);
+  background: #1a1a1a;
   border-radius: 12px;
   margin-top: 12px;
   flex-shrink: 0;
+  color: #888;
 }
-
 .loginPrompt span {
   font-size: 1.5rem;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
-.loginPrompt p {
-  margin: 0;
-  font-size: 0.85rem;
-  color: #888;
-}
-
-/* Mobile Responsive */
 @media (max-width: 768px) {
-  .overlay {
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.9);
-  }
-
   .lightboxContent {
     flex-direction: column;
-    width: 100%;
-    max-width: 95%;
     height: 85vh;
     max-height: 85vh;
-    border-radius: 24px;
-    overflow: hidden;
   }
-  
   .imagePanel {
     flex: 1;
     border-right: none;
-    border-bottom: 1px solid #1a1a1e;
+    border-bottom: 1px solid #222;
     padding: 10px;
     min-height: 40vh;
-    max-height: 50vh;
   }
-  
   .interactivePanel {
     flex: 1;
     padding: 12px;
-    max-height: 45vh;
-    display: flex;
-    flex-direction: column;
   }
-
   .closeBtn {
-    top: 20px;
-    right: 20px;
-    width: 36px;
-    height: 36px;
-    font-size: 1.5rem;
-    background: rgba(0, 0, 0, 0.7);
-  }
-
-  .photoHeader {
-    margin-bottom: 8px;
-    flex-shrink: 0;
-  }
-
-  .avatar {
-    width: 32px;
-    height: 32px;
-  }
-
-  .photoHeader h3 {
-    font-size: 0.9rem;
-  }
-
-  .mainCaption {
-    font-size: 0.85rem;
-    margin-bottom: 8px;
-    max-height: 60px;
-    overflow-y: auto;
-  }
-
-  .commentsList {
-    flex: 1;
-    gap: 10px;
-    margin-bottom: 8px;
-    max-height: calc(45vh - 150px); /* Adjust based on header and form */
-    min-height: 80px;
-  }
-
-  .commentAvatar {
-    width: 28px;
-    height: 28px;
-  }
-
-  .commentBody {
-    padding: 8px 12px;
-  }
-
-  .commentUser {
-    font-size: 0.75rem;
-  }
-
-  .commentTime {
-    font-size: 0.6rem;
-  }
-
-  .commentText {
-    font-size: 0.8rem;
-  }
-
-  .deleteCommentBtn {
-    width: 24px;
-    height: 24px;
-    font-size: 1rem;
-  }
-
-  .commentInput {
-    font-size: 0.85rem;
-    padding: 8px 14px;
-  }
-
-  .commentSubmitBtn {
-    width: 32px;
-    height: 32px;
-    font-size: 1rem;
-  }
-
-  .noComments {
-    padding: 20px 20px;
-  }
-
-  .noComments span {
-    font-size: 2rem;
-  }
-
-  .noComments p {
-    font-size: 0.8rem;
-  }
-}
-
-/* Small phones (<=480px) - make modal even more compact */
-@media (max-width: 480px) {
-  .lightboxContent {
-    max-width: 98%;
-    height: 80vh;
-  }
-
-  .interactivePanel {
-    padding: 8px;
-  }
-
-  .photoHeader {
-    gap: 6px;
-  }
-
-  .avatar {
-    width: 28px;
-    height: 28px;
-  }
-
-  .photoHeader h3 {
-    font-size: 0.8rem;
-  }
-
-  .mainCaption {
-    font-size: 0.75rem;
-  }
-
-  .commentsList {
-    max-height: calc(80vh - 160px);
-  }
-
-  .commentBody {
-    padding: 6px 10px;
-  }
-
-  .commentUser {
-    font-size: 0.7rem;
-  }
-
-  .commentText {
-    font-size: 0.75rem;
-  }
-
-  .commentInput {
-    font-size: 0.8rem;
-    padding: 6px 12px;
+    top: 10px;
+    right: 10px;
+    font-size: 1.8rem;
   }
 }

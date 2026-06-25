@@ -11,7 +11,7 @@
   text-align: center;
   padding: 3rem;
   font-size: 1.2rem;
-  color: #ccc;
+  color: #888;
   background: #0a0a0a;
   min-height: 100vh;
 }
@@ -19,29 +19,16 @@
 .profileHeader {
   text-align: center;
   margin-bottom: 3rem;
-  background: linear-gradient(135deg, #0f0f13, #1a1a2e);
+  background: #121214;
   padding: 2rem;
-  border-radius: 24px;
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-.avatarLarge {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 3px solid #00ffff;
-  margin-bottom: 1rem;
-  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid #222;
 }
 
 .profileHeader h1 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin: 0.5rem 0;
-  background: linear-gradient(135deg, #ffffff, #00ffff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: #fff;
 }
 
 .email {
@@ -64,15 +51,12 @@
   display: block;
   font-size: 2rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #00ffff, #ff3366);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: #fff;
 }
 
 .statLabel {
   font-size: 0.85rem;
-  color: #aaa;
+  color: #888;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -81,11 +65,13 @@
   margin-top: 2rem;
 }
 
-.photosSection h2 {
+.photosSection h2,
+.wishesSection h2 {
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
-  border-left: 4px solid #00ffff;
+  border-left: 4px solid #fff;
   padding-left: 1rem;
+  color: #fff;
 }
 
 .gallery {
@@ -94,33 +80,100 @@
   gap: 1.5rem;
 }
 
-.noPhotos {
+.noContent {
   text-align: center;
   padding: 3rem;
   background: #121214;
-  border-radius: 16px;
+  border-radius: 12px;
   color: #888;
   font-size: 1rem;
 }
 
+.wishesSection {
+  margin-top: 3rem;
+}
+
+.wishesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.wishCard {
+  background: #121214;
+  border: 1px solid #222;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease;
+}
+
+.wishCard:hover {
+  transform: translateY(-4px);
+  border-color: #444;
+}
+
+.wishHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.wishUser {
+  font-weight: 600;
+  color: #fff;
+  flex: 1;
+}
+
+.wishDate {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.deleteWishBtn {
+  background: transparent;
+  border: none;
+  color: #666;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: color 0.2s;
+}
+
+.deleteWishBtn:hover {
+  color: #ff3366;
+}
+
+.wishMessage {
+  color: #aaa;
+  line-height: 1.5;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
   }
+
   .profileHeader {
     padding: 1.5rem;
   }
-  .avatarLarge {
-    width: 90px;
-    height: 90px;
-  }
+
   .stats {
     gap: 1rem;
   }
+
   .statValue {
     font-size: 1.5rem;
   }
+
   .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+
+  .wishesGrid {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   }
 }
@@ -128,5 +181,9 @@
 @media (max-width: 480px) {
   .gallery {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wishesGrid {
+    grid-template-columns: 1fr;
   }
 }

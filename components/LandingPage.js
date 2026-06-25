@@ -10,38 +10,35 @@ export default function LandingPage({ onViewGallery }) {
 
   const quotes = [
     {
-    text: "Today we celebrate not only a diploma, but years of dedication, courage, and growth.",
-    author: "Graduation Celebration"
-  },
-  {
-    text: "Behind every successful graduate is a story of hard work and determination.",
-    author: "Family Message"
-  },
-  {
-    text: "The future is bright, and this is only the beginning.",
-    author: "Graduation Wish"
-  },
-  {
-    text: "May your dreams be bigger than your fears and your actions louder than your words.",
-    author: "Celebration Quote"
-  },
-  {
-    text: "A proud day for family, friends, and a remarkable graduate.",
-    author: "Graduation Day"
-  }
+      text: "Today we celebrate not only a diploma, but years of dedication, courage, and growth.",
+      author: "Graduation Celebration"
+    },
+    {
+      text: "Behind every successful graduate is a story of hard work and determination.",
+      author: "Family Message"
+    },
+    {
+      text: "The future is bright, and this is only the beginning.",
+      author: "Graduation Wish"
+    },
+    {
+      text: "May your dreams be bigger than your fears and your actions louder than your words.",
+      author: "Celebration Quote"
+    },
+    {
+      text: "A proud day for family, friends, and a remarkable graduate.",
+      author: "Graduation Day"
+    }
   ];
 
   useEffect(() => {
-    // Rotate quotes every 5 seconds
     const interval = setInterval(() => {
       setCurrentQuoteIndex((prev) => (prev + 1) % quotes.length);
     }, 5000);
-    
     return () => clearInterval(interval);
   }, [quotes.length]);
 
   useEffect(() => {
-    // Intersection Observer for scroll animations
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -64,22 +61,22 @@ export default function LandingPage({ onViewGallery }) {
 
   const features = [
     {
-      icon: "",
+      icon: "📸",
       title: "Share Party Photos",
       description: "Upload photos from Addis's graduation party at home – capture the joy, the decorations, and her proud smile."
     },
     {
-      icon: "",
+      icon: "💌",
       title: "Leave Wishes",
       description: "Write congratulatory messages and words of encouragement for Addis's bright future."
     },
     {
-      icon: "",
+      icon: "❤️",
       title: "Like & Comment",
       description: "Engage with each memory by liking and commenting on favorite photos from the celebration."
     },
     {
-      icon: "",
+      icon: "📖",
       title: "Guestbook",
       description: "Sign the digital guestbook with your stories, advice, and love for Addis."
     }
@@ -93,14 +90,12 @@ export default function LandingPage({ onViewGallery }) {
         <div className={styles.heroContent}>
           <div className={styles.heroBadge}>Class of 2026</div>
           <h1 className={styles.heroTitle}>
-            Celebrate Addis's Graduation Party
-            <span className={styles.gradientText}> at Home</span>
+            Celebrate Addis's Graduation Party <br />at Home
           </h1>
           <p className={styles.heroSubtitle}>
             Addis's family invites you to relive every moment of her special day - a warm, intimate graduation celebration hosted in her home.
           </p>
-          
-          {/* Rotating Quote */}
+
           <div className={styles.quoteContainer}>
             <div className={styles.quoteIcon}>"</div>
             <p className={styles.quoteText}>{quotes[currentQuoteIndex].text}</p>
@@ -178,8 +173,8 @@ export default function LandingPage({ onViewGallery }) {
 
           <div className={styles.featuresGrid}>
             {features.map((feature, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className={styles.featureCard}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
@@ -191,6 +186,7 @@ export default function LandingPage({ onViewGallery }) {
           </div>
         </div>
       </section>
+
       {/* CTA Section */}
       <section id="cta" className={`${styles.cta} ${isVisible.cta ? styles.visible : ''}`}>
         <div className={styles.container}>

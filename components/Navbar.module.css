@@ -1,18 +1,16 @@
 .navbar {
-  background: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #00ffff;
-  padding: 1rem 0;
+  background: #0a0a0a;
+  border-bottom: 1px solid #222;
+  padding: 0.8rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
 }
 
 .navContainer {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,438 +23,268 @@
   gap: 30px;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #00ffff, #ff3366);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  letter-spacing: -0.5px;
-  text-transform: uppercase;
-}
-
-/* Desktop Navigation Links */
-.desktopNavLinks {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-/* Replace the logo styles with these */
-.logoGroup {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-}
-
 .logoBtn {
   background: transparent;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 10px;
-  transition: all 0.3s ease;
-  padding: 5px 10px;
-  border-radius: 8px;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
-
 .logoBtn:hover {
-  transform: translateY(-2px);
-  background: rgba(0, 255, 255, 0.1);
-}
-
-.logoIcon {
-  font-size: 1.8rem;
-  transition: transform 0.3s ease;
-}
-
-.logoBtn:hover .logoIcon {
-  transform: scale(1.1);
+  background: rgba(255,255,255,0.05);
 }
 
 .logoText {
-  font-size: 1.3rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #00ffff, #ff3366);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
   letter-spacing: -0.5px;
-  text-transform: uppercase;
 }
 
-/* Remove old logo class if exists */
-.logo {
-  display: none;
+.desktopNavLinks {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .navLinkBtn {
   background: transparent;
-  color: #a1a1aa;
+  color: #aaa;
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
   transition: color 0.2s;
   border: none;
   cursor: pointer;
-  padding: 8px 16px;
-  border-radius: 6px;
+  padding: 6px 12px;
+  border-radius: 4px;
 }
-
 .navLinkBtn:hover {
-  color: #00ffff;
-  background: rgba(0, 255, 255, 0.1);
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+  color: #fff;
+  background: rgba(255,255,255,0.05);
 }
 
-.mobileNavLink {
-  background: transparent;
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 1.2rem;
-  font-weight: 600;
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-  transition: color 0.2s;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-}
-
-.mobileNavLink:hover {
-  color: #00ffff;
-}
-
-/* Rest of your existing styles remain the same */
-.navLink {
-  color: #a1a1aa;
-  text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-.navLink:hover {
-  color: #00ffff;
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
-}
-
-/* Desktop Buttons */
 .desktopButtons {
   display: flex;
-  gap: 15px;
+  gap: 12px;
   align-items: center;
 }
 
 .userInfo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  border: 1px solid #00ffff;
+  border: 1px solid #333;
 }
 
 .userName {
-  font-size: 0.9rem;
-  color: #ffffff;
-  font-weight: 500;
+  font-size: 0.85rem;
+  color: #ddd;
 }
 
-.statusText {
-  color: #888;
-  font-size: 0.9rem;
-}
-
-.googleLoginBtn {
-  background: #ffffff;
-  color: #000000;
+.uploadBtn {
+  background: #fff;
+  color: #000;
   border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-size: 0.8rem;
   font-weight: 600;
-  font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.2s;
 }
-
-.googleLoginBtn:hover {
-  background: #00ffff;
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+.uploadBtn:hover {
+  background: #ddd;
 }
 
 .googleLogoutBtn {
   background: transparent;
-  color: #ff3366;
-  border: 1px solid #ff3366;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 0.9rem;
+  color: #aaa;
+  border: 1px solid #333;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 0.8rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s;
 }
-
 .googleLogoutBtn:hover {
-  background: rgba(255, 51, 102, 0.1);
+  border-color: #666;
+  color: #fff;
 }
 
-.uploadBtn {
-  background: linear-gradient(135deg, #00ffff, #00ccff);
+.googleLoginBtn {
+  background: #fff;
   color: #000;
   border: none;
-  padding: 10px 24px;
-  border-radius: 0px;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-weight: 500;
   font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
   cursor: pointer;
 }
-
-.uploadBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-  background: linear-gradient(135deg, #00ffff, #00ffff);
+.googleLoginBtn:hover {
+  background: #ddd;
 }
 
 .adminBadge {
-  background: linear-gradient(135deg, #ff3366, #ff00cc);
+  background: #333;
   color: #fff;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
-  margin-left: 8px;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-left: 6px;
 }
 
-/* Mobile Menu Button */
 .menuButton {
   display: none;
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 10px;
-  z-index: 200;
+  padding: 8px;
 }
 
 .hamburger {
   display: block;
-  width: 25px;
-  height: 3px;
-  background: #00ffff;
+  width: 24px;
+  height: 2px;
+  background: #fff;
   position: relative;
-  transition: all 0.3s ease;
+  transition: background 0.2s;
+  z-index: 151;
 }
-
 .hamburger::before,
 .hamburger::after {
   content: '';
   position: absolute;
-  width: 25px;
-  height: 3px;
-  background: #00ffff;
-  transition: all 0.3s ease;
+  width: 24px;
+  height: 2px;
+  background: #fff;
+  transition: all 0.2s;
 }
-
 .hamburger::before {
   top: -8px;
 }
-
 .hamburger::after {
   bottom: -8px;
 }
-
 .hamburger.open {
   background: transparent;
 }
-
 .hamburger.open::before {
   transform: rotate(45deg);
   top: 0;
 }
-
 .hamburger.open::after {
   transform: rotate(-45deg);
   bottom: 0;
 }
 
-/* Mobile Menu */
 .mobileMenu {
   position: fixed;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.98);
-  backdrop-filter: blur(20px);
+  background: #0a0a0a;
   z-index: 150;
   transition: left 0.3s ease;
-  overflow-y: auto;
 }
-
 .mobileMenuOpen {
   left: 0;
 }
-
 .mobileMenuContent {
   display: flex;
   flex-direction: column;
   padding: 80px 30px 40px;
   gap: 20px;
 }
-
 .mobileNavLink {
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: 500;
   padding: 12px 0;
-  border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+  border-bottom: 1px solid #222;
   transition: color 0.2s;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
 }
-
 .mobileNavLink:hover {
-  color: #00ffff;
+  color: #aaa;
 }
-
 .mobileDivider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, #00ffff, transparent);
+  background: #222;
   margin: 10px 0;
 }
-
 .mobileUserInfo {
   display: flex;
   align-items: center;
   gap: 15px;
   padding: 15px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid #222;
 }
-
 .mobileAvatar {
-  width: 50px;
-  height: 50px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 2px solid #00ffff;
+  border: 1px solid #333;
 }
-
 .mobileUserName {
-  color: #ffffff;
+  color: #fff;
   font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 5px;
 }
-
 .mobileAdminBadge {
-  background: linear-gradient(135deg, #ff3366, #ff00cc);
+  background: #333;
   color: #fff;
-  padding: 4px 10px;
+  padding: 2px 10px;
   border-radius: 12px;
   font-size: 0.7rem;
-  font-weight: 700;
   display: inline-block;
 }
-
-.mobileUploadBtn {
-  background: linear-gradient(135deg, #00ffff, #00ccff);
+.mobileUploadBtn,
+.mobileGoogleLoginBtn {
+  background: #fff;
   color: #000;
   border: none;
   padding: 14px;
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 1rem;
-  font-weight: 700;
-  text-transform: uppercase;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
-
-.mobileUploadBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-}
-
 .mobileLogoutBtn {
   background: transparent;
-  color: #ff3366;
-  border: 2px solid #ff3366;
+  color: #aaa;
+  border: 1px solid #333;
   padding: 14px;
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 1rem;
-  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-.mobileLogoutBtn:hover {
-  background: rgba(255, 51, 102, 0.1);
-}
-
-.mobileGoogleLoginBtn {
-  background: #ffffff;
-  color: #000000;
-  border: none;
-  padding: 14px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.mobileGoogleLoginBtn:hover {
-  background: #00ffff;
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-}
-
-/* Remove old styles */
-.adminBtn,
-.logoutBtn,
-.modalOverlay,
-.modal,
-.modal h2,
-.input,
-.modalButtons,
-.loginSubmitBtn,
-.cancelBtn {
-  display: none;
-}
-
-/* Responsive Design */
 @media (max-width: 768px) {
   .desktopNavLinks,
   .desktopButtons {
     display: none;
   }
-
   .menuButton {
     display: block;
   }
-
-  .navContainer {
-    padding: 0 20px;
-  }
-
-  .logo {
-    font-size: 1.1rem;
-  }
-
-  .logoGroup {
-    gap: 0;
-  }
-}
-
-@media (min-width: 769px) {
-  .mobileMenu {
-    display: none;
+  .logoText {
+    font-size: 1rem;
   }
 }

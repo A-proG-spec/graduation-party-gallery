@@ -24,7 +24,6 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Unauthorized. Please login with Google.' });
   }
 
-  // Connect using native MongoClient
   const client = await clientPromise;
   const db = client.db();
 
@@ -47,12 +46,16 @@ export default async function handler(req, res) {
         folder: 'graduation_gallery',
       });
 
+      // Use session.user.username if available, else fallback to name
+      const uploaderName = session.user.username || session.user.name;
+      const uploaderEmail = session.user.email;
+
       const newPhoto = {
         cloudinaryUrl: uploadResult.secure_url,
         publicId: uploadResult.public_id,
         caption: caption,
-        uploaderName: session.user.name,
-        uploaderEmail: session.user.email,
+        uploaderName: uploaderName,
+        uploaderEmail: uploaderEmail,
         uploaderImage: session.user.image,
         likes: [],
         uploadDate: new Date(),

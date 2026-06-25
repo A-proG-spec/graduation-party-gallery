@@ -9,6 +9,10 @@ const WishSchema = new mongoose.Schema({
   userImage: {
     type: String,
   },
+    uploaderEmail: {         
+    type: String,
+    required: true,
+  },
   message: {
     type: String,
     required: true,

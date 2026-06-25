@@ -6,12 +6,14 @@ export default async function handler(req, res) {
     const client = await clientPromise;
     const db = client.db();
 
-    // GET: fetch all photos, sorted newest first
+    // GET: fetch photos, optionally filtered by uploaderEmail
     if (req.method === 'GET') {
       try {
+        const { uploaderEmail } = req.query;
+        const filter = uploaderEmail ? { uploaderEmail } : {};
         const photos = await db
           .collection('photos')
-          .find({})
+          .find(filter)
           .sort({ uploadDate: -1 })
           .toArray();
         
@@ -27,7 +29,6 @@ export default async function handler(req, res) {
       return res.status(200).json({ message: 'Use /api/upload for photo uploads' });
     }
 
-    // Any other method
     return res.status(405).json({ message: 'Method not allowed' });
   } catch (error) {
     console.error('API /photos error:', error);

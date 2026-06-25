@@ -69,7 +69,7 @@ export default function Navbar({ onUploadClick, onViewGallery, showGallery }) {
             <>
               <div className={styles.userInfo}>
                 <img src={session.user.image} alt={session.user.name} className={styles.avatar} />
-                <span className={styles.userName}>Hi, {session.user.name.split(' ')[0]}</span>
+                <span className={styles.userName}>Hi, {session.user.username || session.user.name}</span>
               </div>
               <button onClick={onUploadClick} className={styles.uploadBtn}>Upload</button>
               <button onClick={() => signOut()} className={styles.googleLogoutBtn}>Sign Out</button>
@@ -104,7 +104,7 @@ export default function Navbar({ onUploadClick, onViewGallery, showGallery }) {
                 <div className={styles.mobileUserInfo}>
                   <img src={session.user.image} alt={session.user.name} className={styles.mobileAvatar} />
                   <div>
-                    <div className={styles.mobileUserName}>{session.user.name}</div>
+                    <div className={styles.mobileUserName}>Hi, {session.user.username || session.user.name}</div>
                     {isAdmin && <div className={styles.mobileAdminBadge}>Admin</div>}
                   </div>
                 </div>

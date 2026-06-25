@@ -28,13 +28,13 @@ export default async function handler(req, res) {
     if (!text?.trim()) return res.status(400).json({ error: 'Comment text empty' });
 
     try {
-      const newComment = {
-        photoId,
-        text,
-        userName: session.user.name,
-        userImage: session.user.image,
-        createdAt: new Date(),
-      };
+    const newComment = {
+  photoId,
+  text,
+  userName: session.user.username || session.user.name,
+  userImage: session.user.image,
+  createdAt: new Date(),
+}
 
       await db.collection('comments').insertOne(newComment);
       return res.status(201).json(newComment);
