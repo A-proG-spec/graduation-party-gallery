@@ -114,7 +114,6 @@ export default function LightboxModal({ photo, onClose, onRefresh }) {
         </div>
         <div className={styles.interactivePanel}>
           <div className={styles.photoHeader}>
-            <img src={photo.uploaderImage} alt={photo.uploaderName} className={styles.avatar} />
             <div className={styles.photoHeaderInfo}>
               <h3>{photo.uploaderName}</h3>
               <p className={styles.date}>{new Date(photo.uploadDate).toLocaleDateString()}</p>
