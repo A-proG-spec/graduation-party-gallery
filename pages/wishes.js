@@ -133,7 +133,6 @@ export default function Wishes() {
               {wishes.map((wish) => (
                 <div key={wish._id} className={styles.wishCard}>
                   <div className={styles.cardHeader}>
-                    <img src={wish.userImage} alt={wish.userName} className={styles.userAvatar} />
                     <h4>{wish.userName}</h4>
                     <span className={styles.date}>{new Date(wish.createdAt).toLocaleDateString()}</span>
                     {isAdmin && (

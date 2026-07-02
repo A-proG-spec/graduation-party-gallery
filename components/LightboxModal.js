@@ -132,7 +132,6 @@ export default function LightboxModal({ photo, onClose, onRefresh }) {
               <>
                 {comments.map((comment) => (
                   <div key={comment._id} className={styles.commentItem}>
-                    <img src={comment.userImage} alt={comment.userName} className={styles.commentAvatar} />
                     <div className={styles.commentBody}>
                       <div className={styles.commentHeader}>
                         <span className={styles.commentUser}>{comment.userName}</span>

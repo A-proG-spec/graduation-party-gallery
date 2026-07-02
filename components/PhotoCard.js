@@ -55,7 +55,6 @@ export default function PhotoCard({ photo, isAdminMode, onDelete, onRefresh, onP
       </div>
       <div className={styles.postInfo}>
         <div className={styles.uploaderMeta}>
-          <img src={photo.uploaderImage} alt={photo.uploaderName} className={styles.uploaderAvatar} />
           <span className={styles.uploaderName}>{photo.uploaderName}</span>
         </div>
         {photo.caption && <p className={styles.caption}>{photo.caption}</p>}
