@@ -1,22 +1,24 @@
-import { useSession } from 'next-auth/react';
+import { useAuth } from '../context/AuthContext';
 import styles from './PhotoCard.module.css';
 
 export default function PhotoCard({ photo, isAdminMode, onDelete, onRefresh, onPhotoClick }) {
-  const { data: session } = useSession();
-
+  const { user } = useAuth();
   const likes = photo.likes || [];
-  const isLiked = session ? likes.includes(session.user.email) : false;
+  const isLiked = user ? likes.includes(user.email) : false;
 
   const handleLike = async (e) => {
     e.stopPropagation();
-    if (!session) {
-      alert('You must be signed in to like photos.');
+    if (!user) {
+      alert('You must be logged in to like photos.');
       return;
     }
     try {
       const response = await fetch('/api/photos/like', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
         body: JSON.stringify({ photoId: photo._id }),
       });
       if (response.ok) onRefresh();
@@ -31,6 +33,9 @@ export default function PhotoCard({ photo, isAdminMode, onDelete, onRefresh, onP
     try {
       const response = await fetch(`/api/photos/${photo._id}`, {
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
       });
       if (response.ok) onDelete();
     } catch (err) {
@@ -40,25 +45,20 @@ export default function PhotoCard({ photo, isAdminMode, onDelete, onRefresh, onP
 
   const handleCommentClick = (e) => {
     e.stopPropagation();
-    onPhotoClick(photo); // open lightbox
+    onPhotoClick(photo);
   };
 
   return (
     <div className={styles.post}>
-      {/* Image */}
       <div className={styles.imageWrapper}>
         <img src={photo.cloudinaryUrl} alt={photo.caption || 'Graduation Memory'} className={styles.image} />
       </div>
-
-      {/* Post info */}
       <div className={styles.postInfo}>
         <div className={styles.uploaderMeta}>
           <img src={photo.uploaderImage} alt={photo.uploaderName} className={styles.uploaderAvatar} />
           <span className={styles.uploaderName}>{photo.uploaderName}</span>
         </div>
-
         {photo.caption && <p className={styles.caption}>{photo.caption}</p>}
-
         <div className={styles.actions}>
           <button
             className={`${styles.actionBtn} ${isLiked ? styles.liked : ''}`}
@@ -69,10 +69,8 @@ export default function PhotoCard({ photo, isAdminMode, onDelete, onRefresh, onP
           <button className={styles.actionBtn} onClick={handleCommentClick}>
             💬 <span className={styles.commentCount}>{photo.commentCount || 0}</span>
           </button>
-          {(isAdminMode || session?.user?.email === photo.uploaderEmail) && (
-            <button className={styles.deleteBtn} onClick={handleDeleteClick}>
-              Delete
-            </button>
+          {(isAdminMode || user?.email === photo.uploaderEmail) && (
+            <button className={styles.deleteBtn} onClick={handleDeleteClick}>Delete</button>
           )}
         </div>
       </div>

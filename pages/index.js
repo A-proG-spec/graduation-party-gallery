@@ -1,6 +1,5 @@
-// pages/index.js
 import { useState, useEffect, useCallback } from 'react';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/router';
 import Navbar from '../components/Navbar';
 import UploadModal from '../components/UploadModal';
@@ -9,83 +8,70 @@ import LandingPage from '../components/LandingPage';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
-  const { data: session } = useSession();
+  const { user, loading } = useAuth();
   const router = useRouter();
+
   const [photos, setPhotos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [photoLoading, setPhotoLoading] = useState(true);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showGallery, setShowGallery] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  // Fix hydration by only rendering after mount
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // Read view from URL query parameter
+  useEffect(() => {
+    if (user?.email === 'antenehwondwosen@gmail.com') {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
+    }
+  }, [user]);
+
   useEffect(() => {
     if (router.isReady) {
-      const { view } = router.query;
-      setShowGallery(view === 'gallery');
+      setShowGallery(router.query.view === 'gallery');
     }
   }, [router.isReady, router.query]);
 
-  // Check admin status from session
-  useEffect(() => {
-    if (session?.user?.email === 'antenehwondwosen@gmail.com') {
-      setIsAdmin(true);
-    }
-  }, [session]);
-
   const fetchPhotos = useCallback(async () => {
     try {
-      setLoading(true);
+      setPhotoLoading(true);
       const response = await fetch('/api/photos');
-      if (!response.ok) {
-        throw new Error('Failed to fetch photos');
-      }
+      if (!response.ok) throw new Error('Failed to fetch photos');
       const data = await response.json();
       setPhotos(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Error fetching photos:', error);
       setPhotos([]);
     } finally {
-      setLoading(false);
+      setPhotoLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    if (showGallery) {
-      fetchPhotos();
-    }
+    if (showGallery) fetchPhotos();
   }, [showGallery, fetchPhotos]);
 
-  const handleUploadSuccess = () => {
-    fetchPhotos();
-  };
+  const handleUploadSuccess = () => fetchPhotos();
 
-  // Navigate to gallery view
   const handleViewGallery = () => {
     router.push('/?view=gallery', undefined, { shallow: true });
   };
 
-  // Navigate to landing view (remove query)
   const handleViewLanding = () => {
     router.push('/', undefined, { shallow: true });
   };
 
-  // Prevent hydration mismatch
-  if (!isMounted) {
-    return null;
-  }
+  if (!isMounted) return null;
 
-  // Show landing page if gallery not active
   if (!showGallery) {
     return (
       <>
-        <Navbar 
-          onUploadClick={() => setShowUploadModal(true)} 
+        <Navbar
+          onUploadClick={() => setShowUploadModal(true)}
           onViewGallery={handleViewGallery}
           showGallery={showGallery}
         />
@@ -100,25 +86,20 @@ export default function Home() {
     );
   }
 
-  // Show gallery
   return (
     <div className={styles.container}>
-      <Navbar 
-        onUploadClick={() => setShowUploadModal(true)} 
+      <Navbar
+        onUploadClick={() => setShowUploadModal(true)}
         onViewGallery={handleViewLanding}
         showGallery={showGallery}
       />
-      
       <main className={styles.main}>
         <div className="container">
           <div className={styles.galleryHeader}>
             <h1 className={styles.title}>Graduation Memories</h1>
-            <p className={styles.subtitle}>
-              Share your special moments from the celebration!
-            </p>
+            <p className={styles.subtitle}>Share your special moments from the celebration!</p>
           </div>
-          
-          {loading ? (
+          {photoLoading ? (
             <div className="loading">Loading photos...</div>
           ) : photos.length === 0 ? (
             <div className="loading">No photos yet. Be the first to upload!</div>
@@ -132,7 +113,6 @@ export default function Home() {
           )}
         </div>
       </main>
-      
       {showUploadModal && (
         <UploadModal
           onClose={() => setShowUploadModal(false)}

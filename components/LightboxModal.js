@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '../context/AuthContext';
 import styles from './LightboxModal.module.css';
 
 export default function LightboxModal({ photo, onClose, onRefresh }) {
-  const { data: session } = useSession();
+  const { user } = useAuth();
   const [commentText, setCommentText] = useState('');
   const [comments, setComments] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -11,28 +11,23 @@ export default function LightboxModal({ photo, onClose, onRefresh }) {
   const commentsEndRef = useRef(null);
   const textareaRef = useRef(null);
 
-  // Check admin status
   useEffect(() => {
-    if (session?.user?.email === 'antenehwondwosen@gmail.com') {
+    if (user?.email === 'antenehwondwosen@gmail.com') {
       setIsAdmin(true);
     }
-  }, [session]);
+  }, [user]);
 
-  // Auto-scroll to bottom when new comments arrive
   useEffect(() => {
     if (commentsEndRef.current) {
       commentsEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [comments]);
 
-  // Focus textarea on mobile when opening
   useEffect(() => {
-    if (session && window.innerWidth <= 768) {
-      setTimeout(() => {
-        textareaRef.current?.focus();
-      }, 300);
+    if (user && window.innerWidth <= 768) {
+      setTimeout(() => textareaRef.current?.focus(), 300);
     }
-  }, [session]);
+  }, [user]);
 
   const fetchComments = async () => {
     try {
@@ -52,8 +47,8 @@ export default function LightboxModal({ photo, onClose, onRefresh }) {
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
-    if (!session) {
-      alert('Please sign in to leave a comment.');
+    if (!user) {
+      alert('Please log in to leave a comment.');
       return;
     }
     if (!commentText.trim()) return;
@@ -62,11 +57,11 @@ export default function LightboxModal({ photo, onClose, onRefresh }) {
     try {
       const response = await fetch('/api/photos/comment', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          photoId: photo._id,
-          text: commentText,
-        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ photoId: photo._id, text: commentText }),
       });
 
       if (response.ok) {
@@ -83,12 +78,13 @@ export default function LightboxModal({ photo, onClose, onRefresh }) {
 
   const handleDeleteComment = async (commentId) => {
     if (!confirm('Are you sure you want to delete this comment?')) return;
-    
     try {
       const response = await fetch(`/api/photos/comment?commentId=${commentId}`, {
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
       });
-      
       if (response.ok) {
         fetchComments();
       } else {
@@ -100,11 +96,8 @@ export default function LightboxModal({ photo, onClose, onRefresh }) {
     }
   };
 
-  // Handle keyboard shortcuts
   const handleKeyDown = (e) => {
-    if (e.key === 'Escape') {
-      onClose();
-    }
+    if (e.key === 'Escape') onClose();
   };
 
   useEffect(() => {
@@ -115,14 +108,10 @@ export default function LightboxModal({ photo, onClose, onRefresh }) {
   return (
     <div className={styles.overlay} onClick={onClose}>
       <button className={styles.closeBtn} onClick={onClose}>×</button>
-      
       <div className={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
-        {/* Left Side: Photo display */}
         <div className={styles.imagePanel}>
           <img src={photo.cloudinaryUrl} alt={photo.caption} className={styles.largeImage} />
         </div>
-
-        {/* Right Side: Interactive Panels */}
         <div className={styles.interactivePanel}>
           <div className={styles.photoHeader}>
             <img src={photo.uploaderImage} alt={photo.uploaderName} className={styles.avatar} />
@@ -131,12 +120,8 @@ export default function LightboxModal({ photo, onClose, onRefresh }) {
               <p className={styles.date}>{new Date(photo.uploadDate).toLocaleDateString()}</p>
             </div>
           </div>
-
           {photo.caption && <p className={styles.mainCaption}>{photo.caption}</p>}
-          
           <hr className={styles.divider} />
-
-          {/* Comments Scroller */}
           <div className={styles.commentsList}>
             {comments.length === 0 ? (
               <div className={styles.noComments}>
@@ -158,7 +143,7 @@ export default function LightboxModal({ photo, onClose, onRefresh }) {
                       <p className={styles.commentText}>{comment.text}</p>
                     </div>
                     {isAdmin && (
-                      <button 
+                      <button
                         onClick={() => handleDeleteComment(comment._id)}
                         className={styles.deleteCommentBtn}
                         title="Delete comment"
@@ -172,9 +157,7 @@ export default function LightboxModal({ photo, onClose, onRefresh }) {
               </>
             )}
           </div>
-
-          {/* Comment Form */}
-          {session ? (
+          {user ? (
             <form onSubmit={handleCommentSubmit} className={styles.commentForm}>
               <div className={styles.commentInputWrapper}>
                 <textarea
@@ -192,9 +175,9 @@ export default function LightboxModal({ photo, onClose, onRefresh }) {
                     }
                   }}
                 />
-                <button 
-                  type="submit" 
-                  disabled={isSubmitting || !commentText.trim()} 
+                <button
+                  type="submit"
+                  disabled={isSubmitting || !commentText.trim()}
                   className={styles.commentSubmitBtn}
                 >
                   {isSubmitting ? '...' : '→'}
@@ -204,7 +187,7 @@ export default function LightboxModal({ photo, onClose, onRefresh }) {
           ) : (
             <div className={styles.loginPrompt}>
               <span>🔐</span>
-              <p>Sign in to drop a comment</p>
+              <p>Log in to drop a comment</p>
             </div>
           )}
         </div>

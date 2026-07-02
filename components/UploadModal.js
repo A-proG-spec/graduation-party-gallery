@@ -34,6 +34,9 @@ export default function UploadModal({ onClose, onUploadSuccess }) {
       const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
       });
 
       const data = await response.json();
@@ -57,7 +60,6 @@ export default function UploadModal({ onClose, onUploadSuccess }) {
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <h2>Share a Memory</h2>
         {error && <div className={styles.error}>{error}</div>}
-        
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
             <label htmlFor="caption">Caption / Memory Context</label>
@@ -71,7 +73,6 @@ export default function UploadModal({ onClose, onUploadSuccess }) {
               disabled={isUploading}
             />
           </div>
-
           <div className={styles.formGroup}>
             <label htmlFor="image" className={styles.fileLabel}>
               {previewUrl ? 'Change Image' : 'Select Image'}
@@ -85,27 +86,16 @@ export default function UploadModal({ onClose, onUploadSuccess }) {
               disabled={isUploading}
             />
           </div>
-
           {previewUrl && (
             <div className={styles.previewContainer}>
               <img src={previewUrl} alt="Preview" className={styles.previewImage} />
             </div>
           )}
-
           <div className={styles.modalButtons}>
-            <button 
-              type="submit" 
-              className={styles.submitBtn} 
-              disabled={isUploading}
-            >
+            <button type="submit" className={styles.submitBtn} disabled={isUploading}>
               {isUploading ? 'Uploading...' : 'Upload'}
             </button>
-            <button 
-              type="button" 
-              onClick={onClose} 
-              className={styles.cancelBtn}
-              disabled={isUploading}
-            >
+            <button type="button" onClick={onClose} className={styles.cancelBtn} disabled={isUploading}>
               Cancel
             </button>
           </div>

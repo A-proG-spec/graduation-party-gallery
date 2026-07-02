@@ -1,32 +1,29 @@
-// pages/wishes.js
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/router';
 import Navbar from '../components/Navbar';
 import UploadModal from '../components/UploadModal';
 import styles from '../styles/Wishes.module.css';
 
 export default function Wishes() {
-  const { data: session } = useSession();
+  const { user, loading } = useAuth();
   const router = useRouter();
   const [wishes, setWishes] = useState([]);
   const [newWish, setNewWish] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [wishLoading, setWishLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  // Fix hydration
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   useEffect(() => {
-    if (session?.user?.email === 'antenehwondwosen@gmail.com') {
-      setIsAdmin(true);
-    }
-  }, [session]);
+    if (user?.email === 'antenehwondwosen@gmail.com') setIsAdmin(true);
+    else setIsAdmin(false);
+  }, [user]);
 
   const fetchWishes = async () => {
     try {
@@ -39,7 +36,7 @@ export default function Wishes() {
       console.error(err);
       setWishes([]);
     } finally {
-      setLoading(false);
+      setWishLoading(false);
     }
   };
 
@@ -50,15 +47,21 @@ export default function Wishes() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!newWish.trim()) return;
+    if (!user) {
+      alert('Please log in to post a wish.');
+      return;
+    }
 
     setIsSubmitting(true);
     try {
       const response = await fetch('/api/wishes', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
         body: JSON.stringify({ message: newWish }),
       });
-
       if (response.ok) {
         setNewWish('');
         fetchWishes();
@@ -71,13 +74,12 @@ export default function Wishes() {
   };
 
   const handleDeleteWish = async (wishId) => {
-    if (!confirm('Are you sure you want to delete this wish?')) return;
-    
+    if (!confirm('Delete this wish?')) return;
     try {
       const response = await fetch(`/api/wishes?id=${wishId}`, {
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
-      
       if (response.ok) {
         fetchWishes();
       } else {
@@ -89,32 +91,20 @@ export default function Wishes() {
     }
   };
 
-  const handleUploadSuccess = () => {
-    // Handle if needed
-  };
+  const handleUploadSuccess = () => {};
+  const handleViewGallery = () => router.push('/?view=gallery');
 
-  const handleViewGallery = () => {
-    router.push('/?view=gallery');
-  };
-
-  if (!isMounted) {
-    return null;
-  }
+  if (!isMounted) return null;
 
   return (
     <div className={styles.container}>
-      <Navbar 
-        onUploadClick={() => setShowUploadModal(true)}
-        onViewGallery={handleViewGallery}
-        showGallery={false}
-      />
-      
+      <Navbar onUploadClick={() => setShowUploadModal(true)} onViewGallery={handleViewGallery} showGallery={false} />
       <main className={styles.main}>
         <div className="container">
-          <h1 className={styles.title}>🎓 Congratulatory Wishes 🎓</h1>
+          <h1 className={styles.title}>Graduation Wishes</h1>
           <p className={styles.subtitle}>Leave a sweet note or advice for the graduate!</p>
 
-          {session ? (
+          {user ? (
             <form onSubmit={handleSubmit} className={styles.wishForm}>
               <textarea
                 placeholder="Write your wishes here..."
@@ -130,31 +120,29 @@ export default function Wishes() {
             </form>
           ) : (
             <div className={styles.loginPrompt}>
-              Please sign in with Google to write a graduation wish!
+              Please <a href="/login">log in</a> to write a graduation wish!
             </div>
           )}
 
-          {loading ? (
-            <div className="loading">Loading wishes...</div>
+          {wishLoading ? (
+            <div className={styles.loader}>Loading wishes...</div>
           ) : wishes.length === 0 ? (
-            <div className="loading">No wishes yet. Be the first to leave a wish!</div>
+            <div className={styles.noWishes}>No wishes yet. Be the first to leave a wish!</div>
           ) : (
             <div className={styles.wishesGrid}>
               {wishes.map((wish) => (
                 <div key={wish._id} className={styles.wishCard}>
                   <div className={styles.cardHeader}>
                     <img src={wish.userImage} alt={wish.userName} className={styles.userAvatar} />
-                    <div>
-                      <h4>{wish.userName}</h4>
-                      <span className={styles.date}>{new Date(wish.createdAt).toLocaleDateString()}</span>
-                    </div>
+                    <h4>{wish.userName}</h4>
+                    <span className={styles.date}>{new Date(wish.createdAt).toLocaleDateString()}</span>
                     {isAdmin && (
-                      <button 
+                      <button
                         onClick={() => handleDeleteWish(wish._id)}
                         className={styles.deleteWishBtn}
                         title="Delete wish"
                       >
-                        🗑️
+                        ×
                       </button>
                     )}
                   </div>
@@ -165,12 +153,8 @@ export default function Wishes() {
           )}
         </div>
       </main>
-
       {showUploadModal && (
-        <UploadModal
-          onClose={() => setShowUploadModal(false)}
-          onUploadSuccess={handleUploadSuccess}
-        />
+        <UploadModal onClose={() => setShowUploadModal(false)} onUploadSuccess={handleUploadSuccess} />
       )}
     </div>
   );

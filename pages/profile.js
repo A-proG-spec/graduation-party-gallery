@@ -1,5 +1,4 @@
-// pages/profile.js
-import { useSession } from 'next-auth/react';
+import { useAuth } from '../context/AuthContext';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Navbar from '../components/Navbar';
@@ -8,169 +7,109 @@ import UploadModal from '../components/UploadModal';
 import styles from '../styles/Profile.module.css';
 
 export default function Profile() {
-  const { data: session, status } = useSession();
+  const { user, loading } = useAuth();
   const router = useRouter();
   const [photos, setPhotos] = useState([]);
   const [wishes, setWishes] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [statsLoading, setStatsLoading] = useState(true);
   const [stats, setStats] = useState({ photos: 0, wishes: 0 });
   const [showUploadModal, setShowUploadModal] = useState(false);
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
+    if (!loading && !user) {
       router.push('/');
     }
-  }, [status, router]);
+  }, [loading, user, router]);
 
   useEffect(() => {
-    if (session?.user?.email) {
-      fetchUserPhotos();
-      fetchUserWishes();
-      fetchUserStats();
+    if (user?.email) {
+      fetchUserData();
     }
-  }, [session]);
+  }, [user]);
 
-  const fetchUserPhotos = async () => {
+  const fetchUserData = async () => {
     try {
-      const res = await fetch(
-        `/api/photos?uploaderEmail=${session.user.email}`
-      );
-      if (res.ok) {
-        const data = await res.json();
-        setPhotos(data);
-      }
-    } catch (err) {
-      console.error('Error fetching user photos:', err);
-    }
-  };
+      const token = localStorage.getItem('token');
+      const headers = { Authorization: `Bearer ${token}` };
 
-  const fetchUserWishes = async () => {
-    try {
-      const res = await fetch(
-        `/api/wishes?uploaderEmail=${session.user.email}`
-      );
-      if (res.ok) {
-        const data = await res.json();
-        setWishes(data);
-      }
-    } catch (err) {
-      console.error('Error fetching user wishes:', err);
-    }
-  };
+      const photoRes = await fetch(`/api/photos?uploaderEmail=${user.email}`, { headers });
+      const wishRes = await fetch(`/api/wishes?uploaderEmail=${user.email}`, { headers });
 
-  const fetchUserStats = async () => {
-    try {
-      const photoRes = await fetch(
-        `/api/photos?uploaderEmail=${session.user.email}`
-      );
-      let photoCount = 0;
-      if (photoRes.ok) {
-        const data = await photoRes.json();
-        photoCount = data.length;
-      }
+      const photosData = photoRes.ok ? await photoRes.json() : [];
+      const wishesData = wishRes.ok ? await wishRes.json() : [];
 
-      const wishRes = await fetch(
-        `/api/wishes?uploaderEmail=${session.user.email}`
-      );
-      let wishCount = 0;
-      if (wishRes.ok) {
-        const data = await wishRes.json();
-        wishCount = data.length;
-      }
-
-      setStats({
-        photos: photoCount,
-        wishes: wishCount,
-      });
+      setPhotos(photosData);
+      setWishes(wishesData);
+      setStats({ photos: photosData.length, wishes: wishesData.length });
     } catch (err) {
       console.error(err);
     } finally {
-      setLoading(false);
+      setStatsLoading(false);
     }
   };
 
   const handleDeletePhoto = async (photoId) => {
     if (!confirm('Are you sure you want to delete this photo?')) return;
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(`/api/photos/${photoId}`, {
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` }
       });
       if (response.ok) {
-        setPhotos((prev) => prev.filter((p) => p._id !== photoId));
-        setStats((prev) => ({ ...prev, photos: prev.photos - 1 }));
-        alert('Photo deleted successfully!');
+        setPhotos(prev => prev.filter(p => p._id !== photoId));
+        setStats(prev => ({ ...prev, photos: prev.photos - 1 }));
       } else {
-        const error = await response.json();
-        alert(error.message || 'Failed to delete photo');
+        alert('Failed to delete photo');
       }
     } catch (error) {
       console.error('Delete error:', error);
-      alert('Something went wrong while deleting the photo');
+      alert('Error deleting photo');
     }
   };
 
   const handleDeleteWish = async (wishId) => {
     if (!confirm('Are you sure you want to delete this wish?')) return;
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(`/api/wishes?id=${wishId}`, {
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` }
       });
       if (response.ok) {
-        setWishes((prev) => prev.filter((w) => w._id !== wishId));
-        setStats((prev) => ({ ...prev, wishes: prev.wishes - 1 }));
-        alert('Wish deleted successfully!');
+        setWishes(prev => prev.filter(w => w._id !== wishId));
+        setStats(prev => ({ ...prev, wishes: prev.wishes - 1 }));
       } else {
-        const error = await response.json();
-        alert(error.message || 'Failed to delete wish');
+        alert('Failed to delete wish');
       }
     } catch (error) {
       console.error('Delete error:', error);
-      alert('Something went wrong while deleting the wish');
+      alert('Error deleting wish');
     }
   };
 
-  const handleRefresh = () => {
-    fetchUserPhotos();
-    fetchUserWishes();
-    fetchUserStats();
-  };
+  const handleRefresh = () => fetchUserData();
+  const handleUploadSuccess = () => handleRefresh();
+  const handleViewGallery = () => router.push('/?view=gallery');
 
-  const handleUploadSuccess = () => {
-    handleRefresh();
-  };
-
-  const handleViewGallery = () => {
-    router.push('/?view=gallery');
-  };
-
-  if (status === 'loading' || loading) {
+  if (loading || statsLoading) {
     return (
       <>
-        <Navbar
-          onUploadClick={() => setShowUploadModal(true)}
-          onViewGallery={handleViewGallery}
-          showGallery={false}
-        />
+        <Navbar onUploadClick={() => setShowUploadModal(true)} onViewGallery={handleViewGallery} showGallery={false} />
         <div className={styles.loader}>Loading profile...</div>
       </>
     );
   }
 
-  if (!session) return null;
+  if (!user) return null;
 
   return (
     <>
-      <Navbar
-        onUploadClick={() => setShowUploadModal(true)}
-        onViewGallery={handleViewGallery}
-        showGallery={false}
-      />
-
+      <Navbar onUploadClick={() => setShowUploadModal(true)} onViewGallery={handleViewGallery} showGallery={false} />
       <div className={styles.container}>
         <div className={styles.profileHeader}>
-          <h1>{session.user.username || session.user.name}</h1>
-          <p className={styles.email}>{session.user.email}</p>
-
+          <h1>{user.username}</h1>
+          <p className={styles.email}>{user.email}</p>
           <div className={styles.stats}>
             <div className={styles.statItem}>
               <span className={styles.statValue}>{stats.photos}</span>
@@ -183,16 +122,13 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* Photos Section */}
         <div className={styles.photosSection}>
           <h2>Your Uploaded Memories</h2>
           {photos.length === 0 ? (
-            <p className={styles.noContent}>
-              You haven't uploaded any photos yet. Share your graduation memories!
-            </p>
+            <p className={styles.noContent}>You haven't uploaded any photos yet.</p>
           ) : (
             <div className={styles.gallery}>
-              {photos.map((photo) => (
+              {photos.map(photo => (
                 <PhotoCard
                   key={photo._id}
                   photo={photo}
@@ -206,22 +142,17 @@ export default function Profile() {
           )}
         </div>
 
-        {/* Wishes Section */}
         <div className={styles.wishesSection}>
           <h2>Your Wishes</h2>
           {wishes.length === 0 ? (
-            <p className={styles.noContent}>
-              You haven't written any wishes yet. Share your thoughts!
-            </p>
+            <p className={styles.noContent}>You haven't written any wishes yet.</p>
           ) : (
             <div className={styles.wishesGrid}>
-              {wishes.map((wish) => (
+              {wishes.map(wish => (
                 <div key={wish._id} className={styles.wishCard}>
                   <div className={styles.wishHeader}>
                     <span className={styles.wishUser}>{wish.userName}</span>
-                    <span className={styles.wishDate}>
-                      {new Date(wish.createdAt).toLocaleDateString()}
-                    </span>
+                    <span className={styles.wishDate}>{new Date(wish.createdAt).toLocaleDateString()}</span>
                     <button
                       className={styles.deleteWishBtn}
                       onClick={() => handleDeleteWish(wish._id)}
@@ -239,10 +170,7 @@ export default function Profile() {
       </div>
 
       {showUploadModal && (
-        <UploadModal
-          onClose={() => setShowUploadModal(false)}
-          onUploadSuccess={handleUploadSuccess}
-        />
+        <UploadModal onClose={() => setShowUploadModal(false)} onUploadSuccess={handleUploadSuccess} />
       )}
     </>
   );

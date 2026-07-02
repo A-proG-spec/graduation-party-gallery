@@ -1,5 +1,4 @@
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from './auth/[...nextauth]';
+import { getUserFromToken } from '../../lib/auth';
 import clientPromise from '../../lib/mongodb';
 import cloudinary from 'cloudinary';
 import formidable from 'formidable';
@@ -10,25 +9,23 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export const config = {
-  api: { bodyParser: false },
-};
+export const config = { api: { bodyParser: false } };
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const session = await getServerSession(req, res, authOptions);
-  if (!session) {
-    return res.status(401).json({ error: 'Unauthorized. Please login with Google.' });
-  }
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
+  const user = await getUserFromToken(token);
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
 
   const client = await clientPromise;
   const db = client.db();
 
   const form = formidable({});
-  
   form.parse(req, async (err, fields, files) => {
     if (err) {
       return res.status(500).json({ error: 'Error parsing form files' });
@@ -46,17 +43,13 @@ export default async function handler(req, res) {
         folder: 'graduation_gallery',
       });
 
-      // Use session.user.username if available, else fallback to name
-      const uploaderName = session.user.username || session.user.name;
-      const uploaderEmail = session.user.email;
-
       const newPhoto = {
         cloudinaryUrl: uploadResult.secure_url,
         publicId: uploadResult.public_id,
-        caption: caption,
-        uploaderName: uploaderName,
-        uploaderEmail: uploaderEmail,
-        uploaderImage: session.user.image,
+        caption,
+        uploaderName: user.username,
+        uploaderEmail: user.email,
+        uploaderImage: user.image || null,
         likes: [],
         uploadDate: new Date(),
       };

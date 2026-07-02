@@ -5,7 +5,6 @@
   color: #fff;
 }
 
-/* Hero Section */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -33,7 +32,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.75);
   z-index: 1;
 }
 
@@ -72,44 +71,6 @@
   line-height: 1.6;
 }
 
-/* Quote Container */
-.quoteContainer {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 30px 40px;
-  margin: 40px auto;
-  max-width: 600px;
-  position: relative;
-  border: 1px solid #333;
-}
-
-.quoteIcon {
-  position: absolute;
-  top: 15px;
-  left: 20px;
-  font-size: 3rem;
-  color: #888;
-  opacity: 0.4;
-  font-family: serif;
-}
-
-.quoteText {
-  font-size: 1.3rem;
-  font-style: italic;
-  margin-bottom: 15px;
-  line-height: 1.5;
-  padding: 0 20px;
-  color: #eee;
-}
-
-.quoteAuthor {
-  font-size: 0.9rem;
-  color: #aaa;
-  margin: 0;
-}
-
-/* Hero Buttons */
 .heroButtons {
   display: flex;
   gap: 20px;
@@ -154,45 +115,12 @@
   transform: translateY(-3px);
 }
 
-.scrollIndicator {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  animation: bounce 2s infinite;
-}
-
-.scrollIndicator span {
-  display: block;
-  font-size: 0.8rem;
-  margin-bottom: 5px;
-  color: #888;
-}
-
-.scrollArrow {
-  font-size: 1.5rem;
-  animation: bounce 1s infinite;
-  color: #888;
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-}
-
-/* Container */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* Section Styles */
 .sectionHeader {
   text-align: center;
   margin-bottom: 60px;
@@ -217,15 +145,7 @@
   color: #fff;
 }
 
-.sectionSubtitle {
-  font-size: 1.1rem;
-  color: #888;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-/* Purpose Section */
-.purpose {
+.details {
   padding: 100px 0;
   background: #0f0f0f;
   opacity: 0;
@@ -233,143 +153,52 @@
   transition: all 0.8s ease;
 }
 
-.purpose.visible {
+.details.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.purposeContent {
+.detailsGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px;
-  align-items: start;
-}
-
-.purposeImage {
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-.purposeImage img {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: transform 0.5s ease;
-}
-
-.purposeImage:hover img {
-  transform: scale(1.05);
-}
-
-.imageCaption {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
-  color: white;
-  padding: 20px;
-  text-align: center;
-  font-size: 0.9rem;
-}
-
-.purposeText {
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 30px;
+  margin-bottom: 50px;
 }
 
-.purposeCard {
+.detailCard {
   background: #1a1a1a;
-  padding: 25px;
+  padding: 30px;
   border-radius: 15px;
   border: 1px solid #2a2a2a;
+  text-align: center;
   transition: all 0.3s ease;
 }
 
-.purposeCard:hover {
-  transform: translateX(10px);
+.detailCard:hover {
+  transform: translateY(-5px);
   border-color: #fff;
 }
 
-.purposeCard h3 {
+
+
+.detailCard h3 {
   font-size: 1.3rem;
   margin-bottom: 10px;
   color: #fff;
 }
 
-.purposeCard p {
+.detailCard p {
   color: #aaa;
-  line-height: 1.6;
 }
 
-/* Features Section */
-.features {
-  padding: 100px 0;
-  background: #0a0a0a;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease;
-}
-
-.features.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.featuresGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-}
-
-.featureCard {
-  background: #121212;
-  border: 1px solid #222;
-  border-radius: 15px;
-  padding: 35px 25px;
+.detailsMessage {
   text-align: center;
-  transition: all 0.3s ease;
-  animation: fadeInUp 0.6s ease backwards;
+  font-size: 1.1rem;
+  color: #888;
+  margin-top: 20px;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.featureCard:hover {
-  transform: translateY(-10px);
-  border-color: #fff;
-  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
-}
-
-.featureIcon {
-  font-size: 3rem;
-  margin-bottom: 20px;
-}
-
-.featureTitle {
-  font-size: 1.3rem;
-  margin-bottom: 15px;
-  color: #fff;
-}
-
-.featureDescription {
-  color: #aaa;
-  line-height: 1.6;
-}
-
-/* CTA Section */
-.cta {
+.rsvp {
   padding: 100px 0;
   background: #0a0a0a;
   border-top: 1px solid #222;
@@ -378,99 +207,57 @@
   transition: all 0.8s ease;
 }
 
-.cta.visible {
+.rsvp.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.ctaContent {
+.rsvpContent {
   text-align: center;
   max-width: 700px;
   margin: 0 auto;
 }
 
-.ctaTitle {
+.rsvpContent h2 {
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 20px;
   color: #fff;
 }
 
-.ctaText {
+.rsvpContent p {
   font-size: 1.1rem;
   color: #888;
   margin-bottom: 40px;
 }
 
-/* Responsive */
-@media (max-width: 968px) {
-  .purposeContent {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
+.rsvpBtn {
+  background: #fff;
+  color: #000;
+  padding: 14px 40px;
+  border-radius: 50px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
 
-  .heroTitle {
-    font-size: 2.5rem;
-  }
-
-  .sectionTitle {
-    font-size: 2rem;
-  }
-
-  .quoteText {
-    font-size: 1rem;
-  }
+.rsvpBtn:hover {
+  background: #ddd;
+  transform: translateY(-3px);
 }
 
 @media (max-width: 768px) {
   .heroTitle {
+    font-size: 2.5rem;
+  }
+  .sectionTitle {
     font-size: 2rem;
   }
-
-  .heroSubtitle {
-    font-size: 1rem;
-  }
-
-  .quoteContainer {
-    padding: 20px;
-  }
-
-  .quoteText {
-    font-size: 0.9rem;
-    padding: 0;
-  }
-
-  .featuresGrid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-  }
-
-  .sectionTitle {
-    font-size: 1.8rem;
-  }
-
-  .ctaTitle {
-    font-size: 1.8rem;
-  }
-
-  .heroButtons {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .primaryBtn, .secondaryBtn {
-    width: 100%;
-    max-width: 250px;
-    text-align: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .sectionTitle {
-    font-size: 1.5rem;
-  }
-
-  .purposeCard h3 {
-    font-size: 1.1rem;
+  .rsvpContent h2 {
+    font-size: 2rem;
   }
 }

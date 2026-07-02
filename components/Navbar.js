@@ -1,30 +1,26 @@
 import { useEffect, useState } from 'react';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useAuth } from '../context/AuthContext';
 import Link from 'next/link';
 import styles from './Navbar.module.css';
 
 export default function Navbar({ onUploadClick, onViewGallery, showGallery }) {
-  const { data: session, status } = useSession();
+  const { user, loading, logout } = useAuth();
   const [mounted, setMounted] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    if (session?.user?.email === 'antenehwondwosen@gmail.com') {
+    if (user?.email === 'antenehwondwosen@gmail.com') {
       setIsAdmin(true);
-      localStorage.setItem('isAdmin', 'true');
     } else {
       setIsAdmin(false);
-      localStorage.setItem('isAdmin', 'false');
     }
-  }, [session]);
+  }, [user]);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768) {
-        setIsMenuOpen(false);
-      }
+      if (window.innerWidth > 768) setIsMenuOpen(false);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -39,21 +35,16 @@ export default function Navbar({ onUploadClick, onViewGallery, showGallery }) {
     <nav className={styles.navbar}>
       <div className={styles.navContainer}>
         <div className={styles.logoGroup}>
-          <button onClick={onViewGallery} className={styles.logoBtn} title="Home">
+          <button onClick={onViewGallery} className={styles.logoBtn}>
             <span className={styles.logoText}>Graduation Gallery</span>
           </button>
-
           <div className={styles.desktopNavLinks}>
             <button onClick={onViewGallery} className={styles.navLinkBtn}>
               {showGallery ? 'Home' : 'Gallery'}
             </button>
-            <Link href="/wishes" className={styles.navLinkBtn}>
-              Wishes
-            </Link>
-            {session && (
-              <Link href="/profile" className={styles.navLinkBtn}>
-                Profile
-              </Link>
+            <Link href="/wishes" className={styles.navLinkBtn}>Wishes</Link>
+            {user && (
+              <Link href="/profile" className={styles.navLinkBtn}>Profile</Link>
             )}
           </div>
         </div>
@@ -63,22 +54,19 @@ export default function Navbar({ onUploadClick, onViewGallery, showGallery }) {
         </button>
 
         <div className={styles.desktopButtons}>
-          {status === 'loading' ? (
+          {loading ? (
             <span className={styles.statusText}>Loading...</span>
-          ) : session ? (
+          ) : user ? (
             <>
               <div className={styles.userInfo}>
-                <img src={session.user.image} alt={session.user.name} className={styles.avatar} />
-                <span className={styles.userName}>Hi, {session.user.username || session.user.name}</span>
+                <span className={styles.userName}>Hi, {user.username}</span>
               </div>
               <button onClick={onUploadClick} className={styles.uploadBtn}>Upload</button>
-              <button onClick={() => signOut()} className={styles.googleLogoutBtn}>Sign Out</button>
+              <button onClick={logout} className={styles.googleLogoutBtn}>Sign Out</button>
               {isAdmin && <div className={styles.adminBadge}>Admin</div>}
             </>
           ) : (
-            <button onClick={() => signIn('google')} className={styles.googleLoginBtn}>
-              Sign In with Google
-            </button>
+            <Link href="/login" className={styles.googleLoginBtn}>Log In</Link>
           )}
         </div>
 
@@ -87,38 +75,30 @@ export default function Navbar({ onUploadClick, onViewGallery, showGallery }) {
             <button onClick={() => { onViewGallery(); closeMenu(); }} className={styles.mobileNavLink}>
               {showGallery ? 'Home' : 'Gallery'}
             </button>
-            <Link href="/wishes" className={styles.mobileNavLink} onClick={closeMenu}>
-              Wishes
-            </Link>
-            {session && (
-              <Link href="/profile" className={styles.mobileNavLink} onClick={closeMenu}>
-                Profile
-              </Link>
+            <Link href="/wishes" className={styles.mobileNavLink} onClick={closeMenu}>Wishes</Link>
+            {user && (
+              <Link href="/profile" className={styles.mobileNavLink} onClick={closeMenu}>Profile</Link>
             )}
             <div className={styles.mobileDivider}></div>
-
-            {status === 'loading' ? (
+            {loading ? (
               <span className={styles.statusText}>Loading...</span>
-            ) : session ? (
+            ) : user ? (
               <>
                 <div className={styles.mobileUserInfo}>
-                  <img src={session.user.image} alt={session.user.name} className={styles.mobileAvatar} />
                   <div>
-                    <div className={styles.mobileUserName}>Hi, {session.user.username || session.user.name}</div>
+                    <div className={styles.mobileUserName}>Hi, {user.username}</div>
                     {isAdmin && <div className={styles.mobileAdminBadge}>Admin</div>}
                   </div>
                 </div>
                 <button onClick={() => { onUploadClick(); closeMenu(); }} className={styles.mobileUploadBtn}>
                   Upload Photo
                 </button>
-                <button onClick={() => { signOut(); closeMenu(); }} className={styles.mobileLogoutBtn}>
+                <button onClick={() => { logout(); closeMenu(); }} className={styles.mobileLogoutBtn}>
                   Sign Out
                 </button>
               </>
             ) : (
-              <button onClick={() => { signIn('google'); closeMenu(); }} className={styles.mobileGoogleLoginBtn}>
-                Sign In with Google
-              </button>
+              <Link href="/login" className={styles.mobileGoogleLoginBtn} onClick={closeMenu}>Log In</Link>
             )}
           </div>
         </div>
