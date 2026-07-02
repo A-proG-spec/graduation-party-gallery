@@ -6,6 +6,7 @@ export default async function handler(req, res) {
   const client = await clientPromise;
   const db = client.db();
 
+  // GET comments (no auth needed)
   if (req.method === 'GET') {
     const { photoId } = req.query;
     try {
@@ -19,6 +20,7 @@ export default async function handler(req, res) {
     }
   }
 
+  // POST comment (requires login)
   if (req.method === 'POST') {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) return res.status(401).json({ error: 'Unauthorized' });
@@ -44,13 +46,16 @@ export default async function handler(req, res) {
     }
   }
 
+  // DELETE comment (admin only)
   if (req.method === 'DELETE') {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) return res.status(401).json({ error: 'Unauthorized' });
 
     const user = await getUserFromToken(token);
-    if (!user || user.email !== 'antenehwondwosen@gmail.com') {
-      return res.status(403).json({ error: 'Forbidden – Admin only' });
+    if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+    if (user.email !== 'antenehwondwosen@gmail.com') {
+      return res.status(403).json({ error: 'Forbidden – admin only' });
     }
 
     const { commentId } = req.query;

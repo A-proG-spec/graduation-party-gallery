@@ -6,6 +6,7 @@ export default async function handler(req, res) {
   const client = await clientPromise;
   const db = client.db();
 
+  // GET wishes (public)
   if (req.method === 'GET') {
     try {
       const { uploaderEmail } = req.query;
@@ -20,6 +21,7 @@ export default async function handler(req, res) {
     }
   }
 
+  // POST wish (requires login)
   if (req.method === 'POST') {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) return res.status(401).json({ error: 'Unauthorized' });
@@ -45,6 +47,7 @@ export default async function handler(req, res) {
     }
   }
 
+  // DELETE wish (admin OR owner)
   if (req.method === 'DELETE') {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) return res.status(401).json({ error: 'Unauthorized' });
@@ -61,6 +64,7 @@ export default async function handler(req, res) {
 
       const isAdmin = user.email === 'antenehwondwosen@gmail.com';
       const isOwner = user.email === wish.uploaderEmail;
+
       if (!isAdmin && !isOwner) {
         return res.status(403).json({ error: 'Forbidden – not your wish and not admin' });
       }
