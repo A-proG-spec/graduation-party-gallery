@@ -63,25 +63,26 @@ export default function LandingPage({ onViewGallery }) {
             </div>
             <div className={styles.detailCard}>
               <h3>Time</h3>
-              <p>6:00 PM – 10:00 PM</p>
+              <p>1:00AM ( 7:00 Local Time)</p>
             </div>
             <div className={styles.detailCard}>
               <h3>Location</h3>
-              <p>Kotebe</p>
+              <p><a href="https://graduation-party-gallery.vercel.app/" target="_blank">Kotebe<sub>open in maps</sub></a></p>
             </div>
           </div>
           <div className={styles.detailsMessage}>
             <p>We can't wait to celebrate with you! Share your best wishes and photos on this gallery.</p>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* RSVP / CTA */}
-      <section id="rsvp" className={`${styles.rsvp} ${isVisible.rsvp ? styles.visible : ''}`}>
+      < section id="rsvp" className={`${styles.rsvp} ${isVisible.rsvp ? styles.visible : ''}`
+      }>
         <div className={styles.container}>
           <div className={styles.rsvpContent}>
             <h2>Let Us Know You're Coming</h2>
-            <p>We'd love to see you there. Please RSVP by June 25.</p>
+            <p>We'd love to see you there. Please RSVP by July 5.</p>
             {user ? (
               <button onClick={onViewGallery} className={styles.rsvpBtn}>View Gallery & Share</button>
             ) : (
@@ -89,7 +90,7 @@ export default function LandingPage({ onViewGallery }) {
             )}
           </div>
         </div>
-      </section>
-    </div>
+      </section >
+    </div >
   );
 }

@@ -191,6 +191,20 @@
   color: #aaa;
 }
 
+.detailCard a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: .25s;
+}
+
 .detailsMessage {
   text-align: center;
   font-size: 1.1rem;
@@ -254,9 +268,11 @@
   .heroTitle {
     font-size: 2.5rem;
   }
+
   .sectionTitle {
     font-size: 2rem;
   }
+
   .rsvpContent h2 {
     font-size: 2rem;
   }
