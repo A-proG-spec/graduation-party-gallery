@@ -1,10 +1,17 @@
+import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import styles from './PhotoCard.module.css';
 
 export default function PhotoCard({ photo, isAdminMode, onDelete, onRefresh, onPhotoClick }) {
   const { user } = useAuth();
+  const [commentCount, setCommentCount] = useState(photo.commentCount || 0);
   const likes = photo.likes || [];
   const isLiked = user ? likes.includes(user.email) : false;
+
+  // Sync with prop changes (e.g., after refresh)
+  useEffect(() => {
+    setCommentCount(photo.commentCount || 0);
+  }, [photo.commentCount]);
 
   const handleLike = async (e) => {
     e.stopPropagation();
@@ -48,6 +55,12 @@ export default function PhotoCard({ photo, isAdminMode, onDelete, onRefresh, onP
     onPhotoClick(photo);
   };
 
+  // This function will be called from LightboxModal after a comment is added
+  // to increment the count optimistically.
+  const incrementCommentCount = () => {
+    setCommentCount(prev => prev + 1);
+  };
+
   return (
     <div className={styles.post}>
       <div className={styles.imageWrapper}>
@@ -66,7 +79,7 @@ export default function PhotoCard({ photo, isAdminMode, onDelete, onRefresh, onP
             <span className={styles.heartIcon}>♥</span> {likes.length}
           </button>
           <button className={styles.actionBtn} onClick={handleCommentClick}>
-            💬 <span className={styles.commentCount}>{photo.commentCount || 0}</span>
+            💬 <span className={styles.commentCount}>{commentCount}</span>
           </button>
           {(isAdminMode || user?.email === photo.uploaderEmail) && (
             <button className={styles.deleteBtn} onClick={handleDeleteClick}>Delete</button>
