@@ -69,12 +69,11 @@ export default function LandingPage({ onViewGallery }) {
               <h3>📍 Location</h3>
               <p>
                 <a
-                  href="https://maps.google.com/maps?q=Kotebe,+Addis+Ababa,+Ethiopia"
+                  href="https://maps.app.goo.gl/h3CmiXviFrfKHH4F8"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Kotebe, Addis Ababa
-                  <sub>open in maps</sub>
+                  open in maps 
                 </a>
               </p>
             </div>
