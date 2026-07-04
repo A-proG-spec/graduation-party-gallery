@@ -8,10 +8,33 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
       const { uploaderEmail } = req.query;
       const filter = uploaderEmail ? { uploaderEmail } : {};
+
+      // Use aggregation to add commentCount
       const photos = await db.collection('photos')
-        .find(filter)
-        .sort({ uploadDate: -1 })
+        .aggregate([
+          { $match: filter },
+          {
+            $lookup: {
+              from: 'comments',
+              localField: '_id',
+              foreignField: 'photoId',
+              as: 'comments'
+            }
+          },
+          {
+            $addFields: {
+              commentCount: { $size: '$comments' }
+            }
+          },
+          {
+            $project: {
+              comments: 0 // remove the comments array
+            }
+          },
+          { $sort: { uploadDate: -1 } }
+        ])
         .toArray();
+
       return res.status(200).json(photos);
     }
 

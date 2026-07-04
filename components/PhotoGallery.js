@@ -34,24 +34,26 @@ export default function PhotoGallery({
   };
 
   const handleDelete = async (photoId) => {
-    const username = process.env.NEXT_PUBLIC_ADMIN_USERNAME;
-    const password = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('You must be logged in to delete.');
+      return;
+    }
 
     try {
       const response = await fetch(`/api/photos/${photoId}`, {
         method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ username, password }),
       });
 
       if (response.ok) {
-        // If the deleted photo is currently open in the lightbox, close it
         handleCloseLightbox();
         onRefresh();
       } else {
-        alert('Failed to delete photo');
+        const data = await response.json();
+        alert(data.error || 'Failed to delete photo');
       }
     } catch (error) {
       console.error('Delete error:', error);
@@ -78,8 +80,8 @@ export default function PhotoGallery({
             photo={photo}
             isAdminMode={isAdminMode}
             onDelete={() => handleDelete(photo._id)}
-            onRefresh={onRefresh} // Added to track active state updates for likes
-            onPhotoClick={() => handlePhotoClick(index)} // Matched to PhotoCard's internal prop name
+            onRefresh={onRefresh}
+            onPhotoClick={() => handlePhotoClick(index)}
           />
         ))}
       </div>
@@ -88,13 +90,9 @@ export default function PhotoGallery({
         <LightboxModal
           photo={safePhotos[selectedPhotoIndex]}
           onClose={handleCloseLightbox}
-          onRefresh={onRefresh} // Passed down so adding comments updates counts on the main page
+          onRefresh={onRefresh}
           onPrev={selectedPhotoIndex > 0 ? handlePrevPhoto : null}
-          onNext={
-            selectedPhotoIndex < safePhotos.length - 1
-              ? handleNextPhoto
-              : null
-          }
+          onNext={selectedPhotoIndex < safePhotos.length - 1 ? handleNextPhoto : null}
           isAdminMode={isAdminMode}
           onDelete={handleDelete}
         />
