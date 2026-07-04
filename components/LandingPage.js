@@ -19,7 +19,7 @@ export default function LandingPage({ onViewGallery }) {
       { threshold: 0.2 }
     );
 
-    ['hero', 'details', 'rsvp'].forEach((id) => {
+    ['hero', 'details', 'howto', 'rsvp'].forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
@@ -58,27 +58,71 @@ export default function LandingPage({ onViewGallery }) {
           </div>
           <div className={styles.detailsGrid}>
             <div className={styles.detailCard}>
-              <h3>Date</h3>
+              <h3>📅 Date</h3>
               <p>Sunday, July 5, 2026</p>
             </div>
             <div className={styles.detailCard}>
-              <h3>Time</h3>
-              <p>1:00AM ( 7:00 Local Time)</p>
+              <h3>⏰ Time</h3>
+              <p>1:00 AM (7:00 Local Time)</p>
             </div>
             <div className={styles.detailCard}>
-              <h3>Location</h3>
-              <p><a href="https://graduation-party-gallery.vercel.app/" target="_blank">Kotebe<sub>open in maps</sub></a></p>
+              <h3>📍 Location</h3>
+              <p>
+                <a
+                  href="https://maps.google.com/maps?q=Kotebe,+Addis+Ababa,+Ethiopia"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Kotebe, Addis Ababa
+                  <sub>open in maps</sub>
+                </a>
+              </p>
             </div>
           </div>
           <div className={styles.detailsMessage}>
             <p>We can't wait to celebrate with you! Share your best wishes and photos on this gallery.</p>
           </div>
         </div>
-      </section >
+      </section>
+
+      {/* How It Works Section */}
+      <section id="howto" className={`${styles.howto} ${isVisible.howto ? styles.visible : ''}`}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionTag}>How It Works</span>
+            <h2 className={styles.sectionTitle}>Share the Joy in 3 Steps</h2>
+          </div>
+          <div className={styles.howtoGrid}>
+            <div className={styles.howtoCard}>
+              <div className={styles.howtoIcon}>📸</div>
+              <h3>1. Upload Photos</h3>
+              <p>
+                After logging in, click the <strong>Upload</strong> button and select your favourite moments from Addis's graduation party.
+                Add a caption to tell the story behind each photo.
+              </p>
+            </div>
+            <div className={styles.howtoCard}>
+              <div className={styles.howtoIcon}>✍️</div>
+              <h3>2. Write a Wish</h3>
+              <p>
+                Go to the <strong>Wishes</strong> page and leave a heartfelt message for Addis.
+                Your words will stay as a lasting memory of this special day.
+              </p>
+            </div>
+            <div className={styles.howtoCard}>
+              <div className={styles.howtoIcon}>❤️</div>
+              <h3>3. Like & Comment</h3>
+              <p>
+                Interact with photos by liking them and leaving comments.
+                Let the graduate know how proud you are!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* RSVP / CTA */}
-      < section id="rsvp" className={`${styles.rsvp} ${isVisible.rsvp ? styles.visible : ''}`
-      }>
+      <section id="rsvp" className={`${styles.rsvp} ${isVisible.rsvp ? styles.visible : ''}`}>
         <div className={styles.container}>
           <div className={styles.rsvpContent}>
             <h2>Let Us Know You're Coming</h2>
@@ -90,7 +134,7 @@ export default function LandingPage({ onViewGallery }) {
             )}
           </div>
         </div>
-      </section >
-    </div >
+      </section>
+    </div>
   );
 }

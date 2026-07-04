@@ -204,7 +204,100 @@
   text-underline-offset: 4px;
   transition: .25s;
 }
+/* How It Works Section */
+.howto {
+  padding: 100px 0;
+  background: #111;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
 
+.howto.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.howtoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.howtoCard {
+  background: #1a1a1a;
+  padding: 35px 25px;
+  border-radius: 16px;
+  border: 1px solid #2a2a2a;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.howtoCard:hover {
+  transform: translateY(-6px);
+  border-color: #fff;
+  box-shadow: 0 8px 30px rgba(255,255,255,0.05);
+}
+
+.howtoIcon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.howtoCard h3 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.howtoCard p {
+  color: #aaa;
+  line-height: 1.6;
+}
+
+.howtoCard p strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Small tweak for the detail card link */
+.detailCard a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: 0.2s;
+}
+
+.detailCard a:hover {
+  color: #ddd;
+}
+
+.detailCard a sub {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .howto {
+    padding: 60px 0;
+  }
+  .howtoGrid {
+    grid-template-columns: 1fr;
+  }
+  .howtoCard {
+    padding: 25px 20px;
+  }
+}
 .detailsMessage {
   text-align: center;
   font-size: 1.1rem;
